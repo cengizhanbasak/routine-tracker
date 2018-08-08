@@ -5,6 +5,7 @@ class HabitForm extends Component {
 
     render()
     {
+        let days = ["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"]
         return (
             <div className="habitFormPage">
                 <form>
@@ -15,13 +16,7 @@ class HabitForm extends Component {
                     <label>Remind me at: </label><br/>
                     <input type="time" className="time"/><br/>
                     <label>Active Days: </label><br/>
-                    <input type="checkbox" name="Monday"/>Monday<br/>
-                    <input type="checkbox" name="Tuesday"/>Tuesday<br/>
-                    <input type="checkbox" name="Wednesday"/>Wednesday<br/>
-                    <input type="checkbox" name="Thursday"/>Thursday<br/>
-                    <input type="checkbox" name="Friday"/>Friday<br/>
-                    <input type="checkbox" name="Saturday"/>Saturday<br/>
-                    <input type="checkbox" name="Sunday"/>Sunday<br/>
+                    { days.map((day)=> (<span><input type="checkbox" name={day}/> {day} <br/></span>)) }
                     <input type="submit" value="Add Habit" />
                 </form>
             </div>

@@ -45,7 +45,6 @@ class App extends Component {
                     &&
                     <Redirect to="/"/>
                 }
-                <script src="https://js.jotform.com/JotForm.js"></script>
             </div>
         );
     }
