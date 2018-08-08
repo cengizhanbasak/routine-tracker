@@ -1,0 +1,27 @@
+.habitFormPage {
+    padding: 0px 40px;
+}
+
+form input {
+    padding: 8px;
+    color: #ddd;
+    background: #444;
+    border-radius: 4px;
+    margin: 4px;
+}
+
+form textarea {
+    padding: 8px;
+    color: #ddd;
+    background: #444;
+    border-radius: 4px;
+}
+
+.input_name {
+    width: 200px;
+}
+
+.input_descr {
+    width: 200px;
+    height: 60px;
+}

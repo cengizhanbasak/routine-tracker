@@ -1,0 +1,46 @@
+.Main{
+    min-height: 100vh;
+    width: 100%;
+    background: rgba(240,240,240,0.8);
+    margin: 0;
+    padding: 10px 0px;
+    text-align: left;
+
+}
+
+.Dashboard-head {
+    padding: 10px;
+}
+
+.dbhead-content {
+    display: flex;
+    justify-content: space-between;
+    padding: 40px;
+}
+
+.Menu {
+    float: left;
+    display:flex;
+    align-items:flex-end;
+}
+
+.Menu h1 {
+    padding: 5px 10px;
+}
+.Menu h1:hover {
+    background: #444;
+    color: white;
+}
+
+.NewHabitButton {
+    padding: 10px;
+    background: #00a7ff;
+    border-radius: 10px;
+    width: 200px;
+    text-align: center;
+    float: right;
+}
+
+.NewHabitButton:hover {
+    background: rgba(0, 167, 255,0.8);
+}

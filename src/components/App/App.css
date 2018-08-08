@@ -1,0 +1,12 @@
+.App {
+  text-align: center;
+  padding-top: 5px;
+  margin: 0;
+  background-color: #fff;
+  min-height: 90vh;
+}
+
+
+.App-intro {
+  font-size: large;
+}
