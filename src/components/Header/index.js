@@ -5,16 +5,10 @@ import { Link } from 'react-router-dom';
 
 class Header extends Component {
 
-    state= {username:'unk'};
 
     render()
     {
-        if(this.props.loggedIn){
-            // var apiKey = JF.getAPIKey();
-            // let userInfo = JF.getUser(function(response){
-            //     this.setState({username:response.username});
-            // });
-        }
+
 
 
         return(
@@ -30,7 +24,7 @@ class Header extends Component {
                                 (
                                 <ul className="Header-menuItemList">
                                     <Link to="/"><li onClick={this.props.OnLoginClick}><span>Login</span></li></Link>
-                                    <Link to="/dashboard"><li onClick={this.props.OnSignupClick}><span>Signup</span></li></Link>
+                                    <a href="https://www.jotform.com/signup"><li ><span>Signup</span></li></a>
                                 </ul>
                                 )
                             }
@@ -39,7 +33,7 @@ class Header extends Component {
                                 &&
                                 (
                                 <ul className="Header-menuItemList">
-                                    <li>Hello, {this.state.username}</li>
+                                    <li>Hello, {this.props.user.username}</li>
                                     <Link to=""><li onClick={this.props.OnLogoutClick}><span>Logout</span></li></Link>
                                 </ul>
                                 )

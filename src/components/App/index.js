@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import './App.css';
-// import JF from 'jotform';
 import Header from '../Header';
 import Main from '../Main';
 import Landing from '../Landing';
@@ -10,25 +9,30 @@ import { Route, Link, Redirect } from "react-router-dom";
 class App extends Component {
     state = {
         loggedIn: false,
-        user: {name: "Tosunami"}
+        user: {}
     }
 
     OnLoginClick= () =>
     {
-        this.setState({loggedIn:true});
-        // JF.login(
-        //     () => this.setState({loggedIn:true})
-        //     ,
-        //     () => alert('could not login')
-        // );
+        window.JF.login(
+            () => {
+            window.JF.getUser((user) => {
+                this.setState({loggedIn:true,user:user})
+            },(err) => console.log(err) )
+            }
+            ,
+            (err) => console.log(err)
+        );
     }
-    OnSignupClick= () => this.setState({loggedIn: true});
-    OnLogoutClick= () => this.setState({loggedIn: false});
+    OnLogoutClick= () => {
+        window.JF.logout();
+        this.setState({loggedIn: false,user:{}});
+    }
 
     render() {
         return (
             <div className="App">
-                <Header loggedIn={this.state.loggedIn} OnLoginClick={this.OnLoginClick} OnSignupClick={this.OnSignupClick} OnLogoutClick={this.OnLogoutClick}/>
+                <Header loggedIn={this.state.loggedIn} OnLoginClick={this.OnLoginClick} OnLogoutClick={this.OnLogoutClick} user={this.state.user} />
                 <Route exact path="/" component={Landing} />
                 <Route path="/dashboard" component={Main} />
                 {
