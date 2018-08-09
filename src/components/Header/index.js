@@ -15,7 +15,7 @@ class Header extends Component {
             <header className="App-header">
                 <div className="Header-content">
                     <div className="App-logoWrapper">
-                        <a className="App-TitleLink" href="#"><span className="App-title">Tracker</span><span className="AppTitle-subtext"> by JotForm</span></a>
+                        <a className="App-TitleLink" href="/"><span className="App-title">Tracker</span><span className="AppTitle-subtext"> by JotForm</span></a>
                     </div>
                     <div className="App-menuWrapper">
                             {
