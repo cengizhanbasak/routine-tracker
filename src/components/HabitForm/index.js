@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
 import './HabitForm.css';
-
-const qs = require('qs');
-const axios = require('axios');
+import {postRequest} from '../RequestHandler';
 
 class HabitForm extends Component {
 
@@ -28,7 +26,7 @@ class HabitForm extends Component {
 
         console.log(apiKey);
 
-        const emailProps = {
+        /*const emailProps = {
             "body":`<body><table border="0" width="100%" cellspacing="0" cellpadding="0" bgcolor="#f7f9fc"><tbody><tr><td height="30">
                     </td>
                     </tr><tr><td align="center">
@@ -37,7 +35,7 @@ class HabitForm extends Component {
                         </tr></tbody></table><table border="0" width="500" cellspacing="0" cellpadding="0" bgcolor="#eeeeee" style="min-width: 500px;width: 500px;"><tbody><tr><td bgcolor="#EEEEEE" width="4">
                     </td>
                         <td align="center" bgcolor="#FFFFFF">
-                            <table id="emailFieldsTable" class="mceNonEditable" border="0" width="100%" cellspacing="0" cellpadding="5"><tbody id="emailFieldsTableBody"><tr id="row_1" class="questionRow"><td bgcolor="white" id="question_1" class="questionColumn" style="padding:5px !important;" valign="top" width="170">Email</td><td bgcolor="white" id="value_1" class="valueColumn" style="padding:5px !important;">{email}</td></tr><tr id="row_2" class="questionRow"><td id="question_2" class="questionColumn" bgcolor="#f3f3f3" style="padding:5px !important;" valign="top" width="170">Your answer is</td><td id="value_2" class="valueColumn" bgcolor="#f3f3f3" style="padding:5px !important;">{pollQuestion}</td></tr></tbody></table></td>
+                            <table id="emailFieldsTable" class="mceNonEditable" border="0" width="100%" cellspacing="0" cellpadding="5"><tbody id="emailFieldsTableBody"><tr id="row_1" class="questionRow"><td bgcolor="white" id="question_1" class="questionColumn" style="padding:5px !important;" valign="top" width="170">Email</td><td bgcolor="white" id="value_1" class="valueColumn" style="padding:5px !important;">{email}</td></tr><tr id="row_2" class="questionRow"><td id="question_2" class="questionColumn" bgcolor="#f3f3f3" style="padding:5px !important;" valign="top" width="170">Your answer is</td><td id="value_2" class="valueColumn" bgcolor="#f3f3f3" style="padding:5px !important;">{notes}</td></tr></tbody></table></td>
 
                         <td bgcolor="#EEEEEE" width="4">
 
@@ -57,7 +55,7 @@ class HabitForm extends Component {
                     </td>
                     </tr></tbody></table></body>`,
             "dirty": "",
-            "from": "JotPoll",
+            "from": "DailyRoutineApp",
             "hideEmptyFields": "1",
             "html": "1",
             "lastQuestionID": "2",
@@ -70,9 +68,8 @@ class HabitForm extends Component {
             "to": "{email}",
             "type": "autorespond",
         }
-
+*/
         const properties = {
-            "emails":[emailProps],
             "formType":"cardForm",
             "activeRedirect": "thanktext",
             "alignment": "Top",
@@ -146,6 +143,28 @@ class HabitForm extends Component {
             validateLiteDate: "Yes"
         }
 
+        const hours = {
+            calcMatrixValues: "",
+            description: "",
+            dropdown: "Yes|No",
+            emojiCount: "5",
+            inputType: "Text Box",
+            labelAlign: "Auto",
+            matrixcells: "",
+            matrixwidth: "",
+            mcolumns: "Tıme",
+            mrows: "Monday|Tuesday|Wednesday|Thursday|Frıday|Saturday|Sunday",
+            name: "times",
+            order: "4",
+            qid: "4",
+            required: "No",
+            reverseSliderValues: "No",
+            shuffleMatrix: "No",
+            text: "Times",
+            toggleText: "Yes|No",
+            type: "control_matrix"
+        }
+
         const formObject = {
             "properties":properties,
             "properties[title]":`{DailyRoutine} ${this.state.title}`,
@@ -160,10 +179,16 @@ class HabitForm extends Component {
             "questions[2]":date,
             "questions[3][type]":`control_textarea`,
             "questions[3][text]":`Notes`,
-            "questions[3][order]":"4",
-            "questions[3][qid]":"4",
+            "questions[3][order]":"5",
+            "questions[3][qid]":"6",
             "questions[3][cols]":`40`,
             "questions[3][name]":"notes",
+            "questions[4]":hours,
+            "questions[5][name]":"isActive",
+            "questions[5][type]":"control_yesno",
+            "questions[5][order]": "6",
+            "questions[5][options]": "YES|NO",
+
             // "questions[3][name]":"submit",
             // "questions[3][text]":"Submit",
             // "questions[3][type]":"control_button",
@@ -174,11 +199,8 @@ class HabitForm extends Component {
         console.log(formObject);
 
         // window.JF.createForm(formObject,(resp) => {console.log(resp)},(err)=>console.log(err));
-        axios({
-            method: 'POST',
-            url: 'http://api.jotform.com/form?apiKey=85dcbbcdad0b18a508112756e56fdcfb',
-            data: qs.stringify(formObject),
-        }).then((response)=>console.log(response));        // 85dcbbcdad0b18a508112756e56fdcfb
+        postRequest('http://api.jotform.com/form?apiKey=85dcbbcdad0b18a508112756e56fdcfb',formObject);
+        // 85dcbbcdad0b18a508112756e56fdcfb
     }
 
     render()
