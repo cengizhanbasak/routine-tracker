@@ -15,7 +15,7 @@ class Header extends Component {
             <header className="App-header">
                 <div className="Header-content">
                     <div className="App-logoWrapper">
-                        <a className="App-TitleLink" href="#"><span className="App-title">Tracker</span><span className="AppTitle-subtext"> by JotForm</span></a>
+                        <a className="App-TitleLink" href="/"><span className="App-title">Tracker</span><span className="AppTitle-subtext"> by JotForm</span></a>
                     </div>
                     <div className="App-menuWrapper">
                             {
@@ -23,8 +23,8 @@ class Header extends Component {
                                 &&
                                 (
                                 <ul className="Header-menuItemList">
-                                    <Link to="/"><li onClick={this.props.OnLoginClick}><span>Login</span></li></Link>
-                                    <a href="https://www.jotform.com/signup"><li ><span>Signup</span></li></a>
+                                    <li onClick={this.props.OnLoginClick}><Link to="/"><span>Login</span></Link></li>
+                                    <li ><a href="https://www.jotform.com/signup"><span>Signup</span></a></li>
                                 </ul>
                                 )
                             }

@@ -3,7 +3,7 @@ import './App.css';
 import Header from '../Header';
 import Main from '../Main';
 import Landing from '../Landing';
-import { Route, Link, Redirect } from "react-router-dom";
+import { Route, Redirect, Switch } from "react-router-dom";
 
 
 class App extends Component {
@@ -33,18 +33,26 @@ class App extends Component {
         return (
             <div className="App">
                 <Header loggedIn={this.state.loggedIn} OnLoginClick={this.OnLoginClick} OnLogoutClick={this.OnLogoutClick} user={this.state.user} />
-                <Route exact path="/" component={Landing} />
-                <Route path="/dashboard" component={Main} />
+                <Switch>
+                    <Route exact path="/" component={Landing} />
+                    <Route path="/dashboard" component={Main} />
+                </Switch>
                 {
                     this.state.loggedIn
                     &&
-                    <Redirect to="/dashboard"/>
+                    window.location.pathname === '/'
+                    &&
+                    <Redirect exact from="/" to="/dashboard/tasks"/>
                 }
                 {
                     !this.state.loggedIn
                     &&
-                    <Redirect to="/"/>
+                    window.location.pathname !== '/'
+                    &&
+                    <Redirect exact to="/"/>
                 }
+
+
             </div>
         );
     }
