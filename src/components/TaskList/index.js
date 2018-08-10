@@ -1,19 +1,16 @@
 import React, { Component } from 'react';
 import './TaskList.css';
-
-const axios = require('axios');
+import RequestHandler from '../RequestHandler';
 
 class TaskList extends Component {
     constructor (props){
         super(props);
         this.state={ routineForms:[] }
+        this.req = new RequestHandler('85dcbbcdad0b18a508112756e56fdcfb');
     }
 
     componentDidMount() {
-        axios({
-            method: 'GET',
-            url: 'https://api.jotform.com/user/forms?apikey=85dcbbcdad0b18a508112756e56fdcfb',
-        }).then((response) => {
+        this.req.getForms().then((response) => {
             this.setState({routineForms:response.data.content.filter(
                 (form) => form.title.indexOf("{DailyRoutine}") !== -1 && form.status === "ENABLED" )});
         })
@@ -24,9 +21,9 @@ class TaskList extends Component {
         return (
             <ul className="Dashboard-list">
                 {
-                    this.state.routineForms.map((form)=> {
+                    this.state.routineForms.map((form,index)=> {
                         return (
-                            <li className="taskItem">
+                            <li className="taskItem" key={index}>
                                 <div className="name">
                                     {form.title}
                                 </div>

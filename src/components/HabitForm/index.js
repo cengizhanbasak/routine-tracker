@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import './HabitForm.css';
-import {postRequest} from '../RequestHandler';
+import {Redirect} from 'react-router-dom';
+import RequestHandler from '../RequestHandler';
 
 class HabitForm extends Component {
 
@@ -9,8 +10,11 @@ class HabitForm extends Component {
         this.state={
             title:'',
             description:'',
+            redirect:'',
         }
+        this.req = new RequestHandler('85dcbbcdad0b18a508112756e56fdcfb');
     }
+
 
     onTitleInputChange=(event)=>{
         this.setState({title: event.target.value});
@@ -184,11 +188,6 @@ class HabitForm extends Component {
             "questions[3][cols]":`40`,
             "questions[3][name]":"notes",
             "questions[4]":hours,
-            "questions[5][name]":"isActive",
-            "questions[5][type]":"control_yesno",
-            "questions[5][order]": "6",
-            "questions[5][options]": "YES|NO",
-
             // "questions[3][name]":"submit",
             // "questions[3][text]":"Submit",
             // "questions[3][type]":"control_button",
@@ -199,7 +198,8 @@ class HabitForm extends Component {
         console.log(formObject);
 
         // window.JF.createForm(formObject,(resp) => {console.log(resp)},(err)=>console.log(err));
-        postRequest('http://api.jotform.com/form?apiKey=85dcbbcdad0b18a508112756e56fdcfb',formObject);
+        this.req.postForm(formObject);
+        this.setState({redirect:'/dashboard/tasks'})
         // 85dcbbcdad0b18a508112756e56fdcfb
     }
 
@@ -217,8 +217,13 @@ class HabitForm extends Component {
                     <input type="time" className="time"/><br/>
                     <label>Active Days: </label><br/>
                     { days.map((day,index)=> (<span key={index}><input type="checkbox" name={day}/> {day} <br/></span>)) }
-                    <input type="submit" value="Add Habit" />
+                    <input type="submit" value="Add Routine" />
                 </form>
+                {
+                    this.state.redirect !== ''
+                    &&
+                    <Redirect to={this.state.redirect} />
+                }
             </div>
         )
     }

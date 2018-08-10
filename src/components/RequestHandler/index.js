@@ -1,25 +1,51 @@
 const axios = require('axios');
 const qs = require('qs');
 
-function getRequest(url,data={}){
+class RequestHandler {
 
-    let response = {}
+    constructor(key){
+        this.apiKey=key;
+    }
 
-    axios.get({
-        url:url,
-        data:data
-    }).then((resp) => response=resp )
+    setAPIKey(key){
+        this.apiKey=key;
+    }
 
-    return response;
+    async getForms(){
+        let response = {}
+
+        var baseURL = 'http://api.jotform.com/user/forms?apiKey=';
+
+        await axios({
+            method: 'GET',
+            url: baseURL+this.apiKey
+        }).then((resp) => response=resp )
+        return response;
+
+    }
+
+    getRequest(url,data={}){
+
+        let response = {}
+
+        axios.get({
+            url:url,
+            data:data
+        }).then((resp) => response=resp )
+        return response;
+    }
+
+
+    postForm(data){
+        var baseURL = 'http://api.jotform.com/form?apiKey='
+        axios({
+            method: 'POST',
+            url: baseURL+this.apiKey,
+            data: qs.stringify(data),
+        }).then((response)=>console.log(response));
+    }
+
 }
 
 
-function postRequest(url,data){
-    axios({
-        method: 'POST',
-        url: url,
-        data: qs.stringify(data),
-    }).then((response)=>console.log(response));
-}
-
-export { postRequest, getRequest };
+export default RequestHandler;

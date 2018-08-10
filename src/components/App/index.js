@@ -42,7 +42,7 @@ class App extends Component {
                     &&
                     window.location.pathname === '/'
                     &&
-                    <Redirect exact from="/" to="/dashboard"/>
+                    <Redirect exact from="/" to="/dashboard/tasks"/>
                 }
                 {
                     !this.state.loggedIn
