@@ -4,6 +4,7 @@ import Header from '../Header';
 import Main from '../Main';
 import Landing from '../Landing';
 import { Route, Redirect, Switch } from "react-router-dom";
+import { setAPIKey } from '../../redux/actions.js';
 
 
 class App extends Component {
@@ -19,6 +20,7 @@ class App extends Component {
             window.JF.getUser((user) => {
                 this.setState({loggedIn:true,user:user})
             },(err) => console.log(err) )
+            //this.props.dispatch(setAPIKey(window.JF.getAPIKey()));
             }
             ,
             (err) => console.log(err)
