@@ -47,5 +47,5 @@ class RequestHandler {
 
 }
 
-
-export default RequestHandler;
+var requestHandler = new RequestHandler('85dcbbcdad0b18a508112756e56fdcfb');
+export default requestHandler;

@@ -5,22 +5,20 @@ import Main from '../Main';
 import Landing from '../Landing';
 import { Route, Redirect, Switch } from "react-router-dom";
 import { setAPIKey } from '../../redux/actions.js';
+import requestHandler from '../RequestHandler';
 
 
 class App extends Component {
-    state = {
-        loggedIn: false,
-        user: {}
-    }
 
     OnLoginClick= () =>
     {
         window.JF.login(
             () => {
             window.JF.getUser((user) => {
-                this.setState({loggedIn:true,user:user})
+                this.props.logIn();
+                this.props.setUser(user);
             },(err) => console.log(err) )
-            //this.props.dispatch(setAPIKey(window.JF.getAPIKey()));
+
             }
             ,
             (err) => console.log(err)
@@ -28,28 +26,26 @@ class App extends Component {
     }
     OnLogoutClick= () => {
         window.JF.logout();
-        this.setState({loggedIn: false,user:{}});
+        this.props.logOut();
     }
 
     render() {
         return (
             <div className="App">
-                <Header loggedIn={this.state.loggedIn} OnLoginClick={this.OnLoginClick} OnLogoutClick={this.OnLogoutClick} user={this.state.user} />
+                <Header loggedIn={this.props.loggedIn} OnLoginClick={this.OnLoginClick} OnLogoutClick={this.OnLogoutClick} user={this.props.user} />
                 <Switch>
                     <Route exact path="/" component={Landing} />
                     <Route path="/dashboard" component={Main} />
                 </Switch>
                 {
-                    this.state.loggedIn
+                    this.props.loggedIn
                     &&
                     window.location.pathname === '/'
                     &&
                     <Redirect exact from="/" to="/dashboard/tasks"/>
                 }
                 {
-                    !this.state.loggedIn
-                    &&
-                    window.location.pathname !== '/'
+                    !this.props.loggedIn
                     &&
                     <Redirect exact to="/"/>
                 }

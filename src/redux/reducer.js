@@ -1,22 +1,25 @@
 const initialState = {
   apikey: '',
   routinesList: [],
+  loggedIn: false,
+  user: {}
 }
 
-const routineApp = (state = [], action) => {
-    if(typeof state === 'undefined'){
-        return initialState;
-    }
+const routineApp = (state = initialState, action) => {
+    
     switch (action.type) {
         case 'SET_APIKEY':
             return Object.assign({},state,{apikey:action.key})
-            break;
         case 'SET_ROUTINESLIST':
             return Object.assign({},state,{routinesList:action.list})
-            break;
+        case 'LOG_IN':
+            return Object.assign({},state,{loggedIn:true})
+        case 'LOG_OUT':
+            return Object.assign({},state,{loggedIn:false})
+        case 'SET_USER':
+            return Object.assign({},state,{user:action.user})
         default:
             return state;
-
     }
 
 }
