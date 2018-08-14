@@ -12,7 +12,7 @@ const routineApp = (state = initialState, action) => {
         case 'LOG_IN':
             return Object.assign({},state,{loggedIn:true})
         case 'LOG_OUT':
-            return Object.assign({},state,{loggedIn:false})
+            return Object.assign({},state,{loggedIn:false, user:{},routinesList:[]})
         case 'SET_USER':
             return Object.assign({},state,{user:action.user})
         default:
