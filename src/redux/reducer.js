@@ -1,15 +1,12 @@
 const initialState = {
-  apikey: '',
   routinesList: [],
   loggedIn: false,
   user: {}
 }
 
 const routineApp = (state = initialState, action) => {
-    
+
     switch (action.type) {
-        case 'SET_APIKEY':
-            return Object.assign({},state,{apikey:action.key})
         case 'SET_ROUTINESLIST':
             return Object.assign({},state,{routinesList:action.list})
         case 'LOG_IN':
