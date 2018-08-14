@@ -8,6 +8,11 @@ export const setRoutinesList = list => ({
     list
 })
 
+export const setActiveRoutine = (id) => ({
+    type: 'SET_ACTIVE_ROUTINE',
+    id
+})
+
 export const logIn = () => ({
     type: 'LOG_IN'
 })

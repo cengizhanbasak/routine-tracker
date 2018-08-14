@@ -1,12 +1,13 @@
 import React, { Component } from 'react';
 import './TaskList.css';
 import requestHandler from '../RequestHandler';
+import { Redirect } from 'react-router-dom';
 
 class TaskList extends Component {
 
     constructor (props){
         super(props);
-        this.state={ routineForms:[] }
+        this.state={ routineForms:[], redirect:'' }
     }
 
 
@@ -20,6 +21,10 @@ class TaskList extends Component {
         })
     }
 
+    onRoutineClick = (id)=>{
+        this.props.setActiveRoutine(id);
+        this.setState({redirect:'/dashboard/tasks/'+id})
+    }
 
     render()
     {
@@ -28,9 +33,9 @@ class TaskList extends Component {
                 {
                     this.props.routineForms.map((form,index)=> {
                         return (
-                            <li className="taskItem" key={index}>
+                            <li className="taskItem" key={index} onClick={() => this.onRoutineClick(form.id)}>
                                 <div className="name">
-                                    {form.title}
+                                    {form.title.substr(15)}
                                 </div>
                                 <div className="time">
                                     12:30
@@ -44,7 +49,10 @@ class TaskList extends Component {
                                     <div className="dayProgress inProgress">-</div>
                                     <div className="dayProgress inProgress">-</div>
                                 </div>
+                                { this.state.redirect !== '' && <Redirect to={this.state.redirect} />}
                             </li>
+
+
                         )
                     })
                 }

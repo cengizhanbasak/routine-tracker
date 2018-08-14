@@ -4,11 +4,12 @@ import './Main.css';
 import TaskListContainer from '../TaskList/TaskListContainer';
 import StatsView from '../StatsView';
 import HabitForm from '../HabitForm';
+import RoutinePageContainer from '../RoutinePage/RoutinePageContainer';
 
 
 
 class Main extends Component {
-    
+
 render(){
     return (
         <div className="Main">
@@ -24,6 +25,7 @@ render(){
             </div>
                 <Route exact path={this.props.match.url + "/tasks"} render={()=> <TaskListContainer/>}/>
                 <Route path={this.props.match.url + "/stats"} render={() => <StatsView/>}/>
+                <Route path={this.props.match.url + "/tasks/:id"} render={()=> <RoutinePageContainer />}/>
                 <Route path={this.props.match.url + "/tasks/new"} render={()=> <HabitForm/>}/>
         </div>
     )

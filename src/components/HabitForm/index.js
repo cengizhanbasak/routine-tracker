@@ -10,7 +10,10 @@ class HabitForm extends Component {
         this.state={
             title:'',
             description:'',
+            diffEveryDay:false,
             redirect:'',
+            activeDays: [],
+            hours: null,
         }
     }
 
@@ -23,56 +26,48 @@ class HabitForm extends Component {
         this.setState({description: event.target.value});
     }
 
+    onDiffEverydayChange=(event)=>{
+        this.setState({diffEveryDay:event.target.checked});
+        this.setState({hours:null})
+    }
+
+    onDayChange=(event)=>{
+        if(event.target.checked){
+            this.setState({activeDays:this.state.activeDays.concat([event.target.name])})
+        }else{
+            this.setState({activeDays:this.state.activeDays.filter((x)=> (x !== event.target.name) ) })
+        }
+    }
+
+    onHourChange=(event)=>{
+        let hrs = Object.assign({},this.state.hours);
+        hrs[event.target.name] = event.target.value;
+        this.setState({hours: hrs})
+    }
+
+    renderSubmitButton= ()=>{
+        if(this.state.name === '') return null;
+        if(this.state.activeDays.length === 0 || this.state.hours === null) return null;
+        if(this.state.diffEveryDay && Object.keys(this.state.hours).length != this.state.activeDays.length) return null;
+        return <input type="submit" value="Add Routine" />
+    }
+
     onSubmitForm = (event) => {
         event.preventDefault();
-        var apiKey = window.JF.getAPIKey();
 
-        console.log(apiKey);
 
-        /*const emailProps = {
-            "body":`<body><table border="0" width="100%" cellspacing="0" cellpadding="0" bgcolor="#f7f9fc"><tbody><tr><td height="30">
-                    </td>
-                    </tr><tr><td align="center">
-                        <table border="0" width="500" cellspacing="0" cellpadding="0" bgcolor="#eeeeee" style="min-width: 500px;width: 500px;"><tbody><tr><td bgcolor="#EEEEEE" width="4">&nbsp;
-                        </td><td bgcolor="#EEEEEE" width="30" height="36"><img style="display: block;" src="https://cdn.jotfor.ms/assets/img/builder/email_logo_small.png" alt=""></td><td style="font-size: 16px; vertical-align: middle; color: #f9922b; padding-top: 2px; line-height: 20px;" align="left" bgcolor="#EEEEEE"><strong>{form_title}</strong></td>
-                        </tr></tbody></table><table border="0" width="500" cellspacing="0" cellpadding="0" bgcolor="#eeeeee" style="min-width: 500px;width: 500px;"><tbody><tr><td bgcolor="#EEEEEE" width="4">
-                    </td>
-                        <td align="center" bgcolor="#FFFFFF">
-                            <table id="emailFieldsTable" class="mceNonEditable" border="0" width="100%" cellspacing="0" cellpadding="5"><tbody id="emailFieldsTableBody"><tr id="row_1" class="questionRow"><td bgcolor="white" id="question_1" class="questionColumn" style="padding:5px !important;" valign="top" width="170">Email</td><td bgcolor="white" id="value_1" class="valueColumn" style="padding:5px !important;">{email}</td></tr><tr id="row_2" class="questionRow"><td id="question_2" class="questionColumn" bgcolor="#f3f3f3" style="padding:5px !important;" valign="top" width="170">Your answer is</td><td id="value_2" class="valueColumn" bgcolor="#f3f3f3" style="padding:5px !important;">{notes}</td></tr></tbody></table></td>
-
-                        <td bgcolor="#EEEEEE" width="4">
-
-                        </td>
-                    </tr><tr><td style="font-size: 4px;" bgcolor="#EEEEEE" height="4">
-                    </td>
-                        <td style="font-size: 4px;" bgcolor="#EEEEEE">&nbsp;</td>
-                        <td style="font-size: 4px;" bgcolor="#EEEEEE">&nbsp;</td>
-                    </tr></tbody></table><table id="autoresponder-footer" width="500" border="0" cellspacing="0" cellpadding="0"><tbody><tr><td bgcolor="#f7f9fc" height="6" style="font-size:6px;"></td>
-                        <td bgcolor="#f7f9fc" style="font-size:6px;"></td>
-                    </tr><tr style="font-size: 14px"><td style="text-align: left;"><a href="https://www.jotform.com/?utm_source=emailfooter&amp;utm_medium=email&amp;utm_term=82074704523958&amp;utm_content=email_footer_text&amp;utm_campaign=autoresponder_email_footer_new_cf_old" target="_blank" style="text-decoration: none; color: #535353">Now create your own JotForm - <span style="color: #ababab;">It&rsquo;s free!</span></a></td>
-                        <td style="text-align: right;">
-                            <a style="border: 0; text-decoration: none; color: #fff; display: inline-block; font-size: 16px; line-height: 36px; width: 160px; text-align: center; background-color: #5fc74d;" href="https://www.jotform.com/?utm_source=emailfooter&amp;utm_medium=email&amp;utm_term=82074704523958&amp;utm_content=email_footer_banner&amp;utm_campaign=autoresponder_email_footer_new_cf_old">Create a JotForm</a>
-                        </td>
-                    </tr></tbody></table></td>
-                    </tr><tr><td height="30">
-                    </td>
-                    </tr></tbody></table></body>`,
-            "dirty": "",
-            "from": "DailyRoutineApp",
-            "hideEmptyFields": "1",
-            "html": "1",
-            "lastQuestionID": "2",
-            "name": "Autoresponder 1",
-            "pdfattachment": "",
-            "replyTo": "",
-            "sendDate": "",
-            "sendOnEdit": "",
-            "subject": "We have received your response for {form_title}",
-            "to": "{email}",
-            "type": "autorespond",
+        var hrs = {}
+        if(!this.state.diffEveryDay){
+            this.state.activeDays.forEach((day)=>{
+                hrs[day] = this.state.hours.time;
+            })
+        }else{
+            hrs=this.state.hours
         }
-*/
+
+
         const properties = {
+            "emails":[],
             "formType":"cardForm",
             "activeRedirect": "thanktext",
             "alignment": "Top",
@@ -116,11 +111,19 @@ class HabitForm extends Component {
             autoCalendar: "No",
             dateSeparator: "-",
             defaultDate: "current",
-            defaultTime: "current",
+            defaultTime: "none",
             description: "",
             format: "yyyymmdd",
             labelAlign: "Auto",
-            // limitDate: "{"days":{"monday":"true","tuesday":"true","wednesday":"true","thursday":"true","friday":"true","saturday":"true","sunday":"true"},"future":"true","past":"true","custom":"false","ranges":"false","start":"","end":""}",
+            limitDate:JSON.stringify({
+                "days":{"monday":"true","tuesday":"true","wednesday":"true","thursday":"true","friday":"true","saturday":"true","sunday":"true"},
+                "future":"true",
+                "past":"true",
+                "custom":"false",
+                "ranges":"false",
+                "start":"",
+                "end":""
+            }),
             liteMode: "Yes",
             minAge: "13",
             name: "date",
@@ -129,7 +132,7 @@ class HabitForm extends Component {
             qid: "3",
             readonly: "No",
             required: "No",
-            startWeekOn: "Monday",
+            startWeekOn: "Sunday",
             step: "10",
             sublabels: {
             day: "Day",
@@ -147,25 +150,11 @@ class HabitForm extends Component {
         }
 
         const hours = {
-            calcMatrixValues: "",
-            description: "",
-            dropdown: "Yes|No",
-            emojiCount: "5",
-            inputType: "Text Box",
-            labelAlign: "Auto",
-            matrixcells: "",
-            matrixwidth: "",
-            mcolumns: "Tıme",
-            mrows: "Monday|Tuesday|Wednesday|Thursday|Frıday|Saturday|Sunday",
             name: "times",
             order: "4",
-            qid: "4",
-            required: "No",
-            reverseSliderValues: "No",
-            shuffleMatrix: "No",
-            text: "Times",
-            toggleText: "Yes|No",
-            type: "control_matrix"
+            qid: "5",
+            text: '<p>'+JSON.stringify(hrs)+'</p>',
+            type: "control_text"
         }
 
         const formObject = {
@@ -174,29 +163,24 @@ class HabitForm extends Component {
             "questions[0][type]": "control_head" ,
             "questions[0][text]":`${this.state.title}`,
             "questions[0][order]":1,
+            "questions[0][qid]":1,
             "questions[0][name]":"Header",
             "questions[1][name]":`Description`,
             "questions[1][type]":`control_text`,
-            "questions[1][text]":`${this.state.description}`,
+            "questions[1][text]":`<p>${this.state.description}<p>`,
             "questions[1][order]":2,
+            "questions[1][qid]":2,
             "questions[2]":date,
             "questions[3][type]":`control_textarea`,
             "questions[3][text]":`Notes`,
             "questions[3][order]":"5",
-            "questions[3][qid]":"6",
+            "questions[3][qid]":"4",
             "questions[3][cols]":`40`,
             "questions[3][name]":"notes",
             "questions[4]":hours,
-            // "questions[3][name]":"submit",
-            // "questions[3][text]":"Submit",
-            // "questions[3][type]":"control_button",
-            // "questions[3][order]":"4",
-            // "questions[3][qid]":"4",
         };
-        console.log(this.state.title,this.state.description);
         console.log(formObject);
 
-        // window.JF.createForm(formObject,(resp) => {console.log(resp)},(err)=>console.log(err));
         requestHandler.postForm(formObject);
         this.setState({redirect:'/dashboard/tasks'})
         // 85dcbbcdad0b18a508112756e56fdcfb
@@ -208,15 +192,40 @@ class HabitForm extends Component {
         return (
             <div className="habitFormPage">
                 <form onSubmit={this.onSubmitForm}>
-                    <label>Title: </label><br/>
+
+                    <label>Title*: </label><br/>
                     <input className="input_name" type="text" onChange={this.onTitleInputChange}/><br/>
+
                     <label>Description: </label><br/>
                     <textarea className="input_descr" onChange={this.onDescriptionInputChange}/><br/>
-                    <label>Remind me at: </label><br/>
-                    <input type="time" className="time"/><br/>
-                    <label>Active Days: </label><br/>
-                    { days.map((day,index)=> (<span key={index}><input type="checkbox" name={day}/> {day} <br/></span>)) }
-                    <input type="submit" value="Add Routine" />
+
+                    <label>Active Days*: </label><br/>
+                    { days.map((day,index)=> (<span key={index}><input type="checkbox" name={day} onChange={this.onDayChange}/> {day} <br/></span>)) }
+
+                    <label>Remind me at*: </label><br/>
+                    <label>Different hours every day </label>
+                    <input type="checkbox" name="diffEveryDay" onChange={this.onDiffEverydayChange}></input>
+                    {
+                        !this.state.diffEveryDay
+                        &&
+                        (<div><input type="time" name="time" onChange={this.onHourChange} /><br/></div>)
+                    }
+                    {
+                        this.state.diffEveryDay
+                        &&
+                        (
+                            <div>
+                                {this.state.activeDays.map((day,index)=>(
+                                    <span key={index}>
+                                        <label>{day}:</label><br/>
+                                        <input type="time" name={`${day}`} onChange={this.onHourChange} /><br/>
+                                    </span>
+                                ))}
+                            </div>
+                        )
+                    }
+                    {this.renderSubmitButton()}
+
                 </form>
                 {
                     this.state.redirect !== ''

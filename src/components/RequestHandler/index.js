@@ -21,7 +21,19 @@ class RequestHandler {
             url: baseURL+this.apiKey
         }).then((resp) => response=resp )
         return response;
+    }
 
+    async getQuestions(id){
+        let response = {};
+
+        var baseURL = 'http://api.jotform.com/form/';
+
+        await axios({
+            method: 'GET',
+            url: baseURL+id+'/questions?apiKey='+this.apiKey
+        }).then((resp)=> response=resp)
+
+        return response.data.content;
     }
 
     getRequest(url,data={}){
