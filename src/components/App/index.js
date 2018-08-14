@@ -4,7 +4,6 @@ import Header from '../Header';
 import Main from '../Main';
 import Landing from '../Landing';
 import { Route, Redirect, Switch } from "react-router-dom";
-import { setAPIKey } from '../../redux/actions.js';
 import requestHandler from '../RequestHandler';
 
 
@@ -15,8 +14,8 @@ class App extends Component {
         window.JF.login(
             () => {
             window.JF.getUser((user) => {
-                this.props.logIn();
-                this.props.setUser(user);
+                this.props.actions.LogIn();
+                this.props.actions.SetUser(user);
             },(err) => console.log(err) )
 
             }
@@ -26,7 +25,7 @@ class App extends Component {
     }
     OnLogoutClick= () => {
         window.JF.logout();
-        this.props.logOut();
+        this.props.actions.LogOut();
     }
 
     render() {

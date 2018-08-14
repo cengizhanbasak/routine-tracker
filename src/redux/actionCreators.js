@@ -1,17 +1,17 @@
 import {setRoutinesList, logIn, logOut, setUser} from './actions';
 
-export const logInThunk = () => (dispatch) => {
+export const LogIn = () => (dispatch) => {
     dispatch(logIn());
 }
 
-export const logOutThunk = () => (dispatch) => {
+export const LogOut = () => (dispatch) => {
     dispatch(logOut());
 }
 
-export const setRoutinesListThunk = (list) => (dispatch) => {
+export const SetRoutinesList = (list) => (dispatch) => {
     dispatch(setRoutinesList(list));
 }
 
-export const setUserThunk = (user) => (dispatch) => {
+export const SetUser = (user) => (dispatch) => {
     dispatch(setUser(user));
 }

@@ -1,5 +1,5 @@
 import TaskList from './index.js';
-import { setRoutinesListThunk } from '../../redux/actionCreators';
+import { SetRoutinesList } from '../../redux/actionCreators';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
@@ -8,7 +8,7 @@ const mapStateToProps = (state,props) => ({
 });
 
 const mapDispatchToProps = ( dispatch, props ) => bindActionCreators({
-    setRoutines: (list) => setRoutinesListThunk(list),
+    setRoutines: (list) => SetRoutinesList(list),
 }, dispatch)
 
 const TaskListContainer = connect(mapStateToProps,mapDispatchToProps)(TaskList);

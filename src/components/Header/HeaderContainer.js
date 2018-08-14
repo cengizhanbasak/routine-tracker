@@ -1,7 +1,6 @@
 import Header from './index.js';
-import { logOut } from '../../redux/actions';
 import { bindActionCreators } from 'redux';
-import { logOutThunk } from '../../redux/actionCreators';
+import { LogOut } from '../../redux/actionCreators';
 import { connect } from 'react-redux';
 
 
@@ -11,7 +10,7 @@ const mapStateToProps = (state,props) => ({
 });
 
 const mapDispatchToProps = ( dispatch, props ) => bindActionCreators({
-    logOut: () => logOutThunk(),
+    logOut: () => LogOut(),
 
 }, dispatch)
 

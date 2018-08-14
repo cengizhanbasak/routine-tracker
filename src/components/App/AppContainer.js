@@ -1,5 +1,5 @@
 import App from './index.js';
-import { setRoutinesListThunk, logInThunk, logOutThunk, setUserThunk } from '../../redux/actionCreators';
+import * as actions from '../../redux/actionCreators';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
@@ -10,12 +10,9 @@ const mapStateToProps = (state,props) => ({
         loggedIn: state.loggedIn
 });
 
-const mapDispatchToProps = ( dispatch, props ) => bindActionCreators({
-    setRoutines: (list) => setRoutinesListThunk(list),
-    logIn: ()=> logInThunk(),
-    logOut: ()=> logOutThunk(),
-    setUser: (user)=> setUserThunk(user)
-}, dispatch)
+const mapDispatchToProps = ( dispatch, props ) => ({
+    actions: bindActionCreators(actions, dispatch)
+})
 
 const AppContainer = connect(mapStateToProps,mapDispatchToProps)(App);
 
