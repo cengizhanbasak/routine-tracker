@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import './HabitForm.css';
 import {Redirect} from 'react-router-dom';
-import RequestHandler from '../RequestHandler';
+import requestHandler from '../RequestHandler';
 
 class HabitForm extends Component {
 
@@ -12,7 +12,6 @@ class HabitForm extends Component {
             description:'',
             redirect:'',
         }
-        this.req = new RequestHandler('85dcbbcdad0b18a508112756e56fdcfb');
     }
 
 
@@ -198,7 +197,7 @@ class HabitForm extends Component {
         console.log(formObject);
 
         // window.JF.createForm(formObject,(resp) => {console.log(resp)},(err)=>console.log(err));
-        this.req.postForm(formObject);
+        requestHandler.postForm(formObject);
         this.setState({redirect:'/dashboard/tasks'})
         // 85dcbbcdad0b18a508112756e56fdcfb
     }
