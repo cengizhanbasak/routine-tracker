@@ -4,7 +4,6 @@ import Header from '../Header';
 import Main from '../Main';
 import Landing from '../Landing';
 import { Route, Redirect, Switch } from "react-router-dom";
-import requestHandler from '../RequestHandler';
 
 
 class App extends Component {

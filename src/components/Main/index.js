@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Route, Link } from 'react-router-dom';
 import './Main.css';
 import TaskListContainer from '../TaskList/TaskListContainer';
-import StatsView from '../StatsView';
+import StatsViewContainer from '../StatsView/StatsViewContainer';
 import HabitForm from '../HabitForm';
 import RoutinePageContainer from '../RoutinePage/RoutinePageContainer';
 
@@ -24,8 +24,8 @@ render(){
                 <hr/>
             </div>
                 <Route exact path={this.props.match.url + "/tasks"} render={()=> <TaskListContainer/>}/>
-                <Route path={this.props.match.url + "/stats"} render={() => <StatsView/>}/>
-                <Route path={this.props.match.url + "/tasks/:id"} render={()=> <RoutinePageContainer />}/>
+                <Route path={this.props.match.url + "/stats"} render={() => <StatsViewContainer/>}/>
+                <Route path={this.props.match.url + "/tasks/:id([0-9]*)"} render={()=> <RoutinePageContainer />}/>
                 <Route path={this.props.match.url + "/tasks/new"} render={()=> <HabitForm/>}/>
         </div>
     )

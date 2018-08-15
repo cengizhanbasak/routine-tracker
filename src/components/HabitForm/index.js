@@ -46,9 +46,9 @@ class HabitForm extends Component {
     }
 
     renderSubmitButton= ()=>{
-        if(this.state.name === '') return null;
+        if(this.state.title === '') return null;
         if(this.state.activeDays.length === 0 || this.state.hours === null) return null;
-        if(this.state.diffEveryDay && Object.keys(this.state.hours).length != this.state.activeDays.length) return null;
+        if(this.state.diffEveryDay && Object.keys(this.state.hours).length !== this.state.activeDays.length) return null;
         return <input type="submit" value="Add Routine" />
     }
 

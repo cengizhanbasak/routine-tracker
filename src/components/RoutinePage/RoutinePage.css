@@ -1,0 +1,31 @@
+.routine-page {
+    padding: 0px 30px;
+}
+
+.routine-title {
+    font-family: Helvetica, Arial, sans-serif;
+}
+
+.submissionWarning {
+    color: rgba(0,0,0,.5);
+}
+
+form input {
+    padding: 8px;
+    color: #ddd;
+    background: #444;
+    border-radius: 4px;
+    margin: 4px;
+}
+
+form textarea {
+    padding: 8px;
+    color: #ddd;
+    background: #444;
+    border-radius: 4px;
+}
+
+.submission-notes{
+    width: 200px;
+    height: 60px;
+}

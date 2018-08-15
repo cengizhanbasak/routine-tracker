@@ -11,6 +11,20 @@ class RequestHandler {
         this.apiKey=key;
     }
 
+    sendSubmission(id,note){
+        let submission = {
+            '4':note
+        }
+
+        var baseURL = 'http://api.jotform.com/form/'
+
+        axios({
+            method: 'POST',
+            url: baseURL+id+'/submissions?apiKey='+this.apiKey,
+            data: qs.stringify(submission)
+        }).then((resp)=>console.log(resp))
+    }
+
     async getForms(){
         let response = {}
 
@@ -21,6 +35,19 @@ class RequestHandler {
             url: baseURL+this.apiKey
         }).then((resp) => response=resp )
         return response;
+    }
+
+    async getSubmissions(id){
+        let response = {};
+
+        var baseURL = 'http://api.jotform.com/form/';
+
+        await axios({
+            method: 'GET',
+            url: baseURL+id+'/submissions?apiKey='+this.apiKey
+        }).then((resp)=> response=resp.data.content)
+
+        return response
     }
 
     async getQuestions(id){
