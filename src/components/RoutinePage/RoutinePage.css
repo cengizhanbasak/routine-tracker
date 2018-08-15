@@ -29,3 +29,14 @@ form textarea {
     width: 200px;
     height: 60px;
 }
+
+.deleteFormButton {
+    width: 200px;
+    line-height: 2em;
+    text-align: center;
+    font-size: 1.2em;
+    color: #000;
+    background: #f00;
+    border-radius: 15px;
+    margin: 50px;
+}

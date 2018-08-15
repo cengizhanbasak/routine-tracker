@@ -14,7 +14,8 @@ class RoutinePage extends Component {
             questions: {},
             submissions: [],
             loading:true,
-            note: ''
+            note: '',
+            redirect: ''
             }
 
     }
@@ -27,10 +28,17 @@ class RoutinePage extends Component {
             })
         })
     }
+
+    onRemoveFormClick = ()=>
+    {
+        requestHandler.removeForm(this.props.activeRoutine).then(()=> this.setState({redirect:'/dashboard/tasks'}) )
+    }
+
     onSubmitForm=(event)=>
     {
         event.preventDefault();
         requestHandler.sendSubmission(this.props.activeRoutine, this.state.note);
+        this.setState({redirect:'/dashboard/tasks'});
     }
 
     onNotesInputChange=(event)=>
@@ -94,6 +102,13 @@ class RoutinePage extends Component {
                         }
                         { this.renderSubmissionForm() }
 
+                        <div className="deleteFormButton" onClick={this.onRemoveFormClick}>Delete Form</div>
+
+                        {
+                            this.state.redirect !== ''
+                            &&
+                            <Redirect to={this.state.redirect} />
+                        }
                     </div>
                 )
             }

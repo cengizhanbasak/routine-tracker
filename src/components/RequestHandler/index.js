@@ -77,13 +77,32 @@ class RequestHandler {
 
     postForm(data){
         var baseURL = 'http://api.jotform.com/form?apiKey='
+        var notificationData = {
+          "app_id": "eb163d0d-1c91-4c62-8875-c3fd70489838",
+          "included_segments": ["All"],
+          "data": {"foo": "bar"},
+          "contents": {"en": "Your reminder is scheduled!"}
+        }
         axios({
             method: 'POST',
             url: baseURL+this.apiKey,
             data: qs.stringify(data),
-        }).then((response)=>console.log(response));
+        }).then((response)=>{
+            if(response.status === 200){
+                window.OneSignal.sendSelfNotification("Routine Tracker","Your reminder is scheduled!")
+            }
+        });
+
     }
 
+    async removeForm(id){
+        var baseURL = 'https://api.jotform.com/form/'
+        await axios({
+            method: 'DELETE',
+            url: baseURL+id+'?apiKey='+this.apiKey
+        })
+        return
+    }
 }
 
 var requestHandler = new RequestHandler('85dcbbcdad0b18a508112756e56fdcfb');
