@@ -37,8 +37,11 @@ class RoutinePage extends Component {
     onSubmitForm=(event)=>
     {
         event.preventDefault();
-        requestHandler.sendSubmission(this.props.activeRoutine, this.state.note);
-        this.setState({redirect:'/dashboard/tasks'});
+        requestHandler.sendSubmission(this.props.activeRoutine, this.state.note).then((resp)=>
+        {
+            this.setState({redirect:'/dashboard/tasks'});
+            console.log(resp);
+        });
     }
 
     onNotesInputChange=(event)=>

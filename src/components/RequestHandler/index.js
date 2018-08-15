@@ -11,14 +11,14 @@ class RequestHandler {
         this.apiKey=key;
     }
 
-    sendSubmission(id,note){
+    async sendSubmission(id,note){
         let submission = {
             '4':note
         }
 
         var baseURL = 'http://api.jotform.com/form/'
 
-        axios({
+        await axios({
             method: 'POST',
             url: baseURL+id+'/submissions?apiKey='+this.apiKey,
             data: qs.stringify(submission)
