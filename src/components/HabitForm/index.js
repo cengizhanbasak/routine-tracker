@@ -183,7 +183,6 @@ class HabitForm extends Component {
 
         requestHandler.postForm(formObject);
         this.setState({redirect:'/dashboard/tasks'})
-        // 85dcbbcdad0b18a508112756e56fdcfb
     }
 
     render()

@@ -11,6 +11,18 @@ class RequestHandler {
         this.apiKey=key;
     }
 
+    async logIn(loginInfo){
+        let response={}
+        var baseURL = 'https://api.jotform.com/user/login';
+
+        await axios({
+            method: 'POST',
+            url: baseURL,
+            data: qs.stringify(loginInfo)
+        }).then((resp)=> response=resp)
+        return response
+    }
+
     async sendSubmission(id,note){
         let submission = new FormData();
         submission.set('submission[4]',note);

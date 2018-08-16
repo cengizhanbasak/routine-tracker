@@ -1,6 +1,6 @@
 import Header from './index.js';
 import { bindActionCreators } from 'redux';
-import { LogOut } from '../../redux/actionCreators';
+import * as actions from '../../redux/actionCreators';
 import { connect } from 'react-redux';
 
 
@@ -9,10 +9,9 @@ const mapStateToProps = (state,props) => ({
         loggedIn: state.loggedIn
 });
 
-const mapDispatchToProps = ( dispatch, props ) => bindActionCreators({
-    logOut: () => LogOut(),
-
-}, dispatch)
+const mapDispatchToProps = ( dispatch, props ) => ({
+    actions: bindActionCreators(actions,dispatch)
+})
 
 const HeaderContainer = connect(mapStateToProps,mapDispatchToProps)(Header);
 
