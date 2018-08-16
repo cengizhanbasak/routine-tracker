@@ -68,7 +68,7 @@ class HabitForm extends Component {
 
         const properties = {
             "emails":[],
-            "formType":"cardForm",
+            "formType":"classic",
             "activeRedirect": "thanktext",
             "alignment": "Top",
             "background": "#fff",
@@ -153,7 +153,7 @@ class HabitForm extends Component {
             name: "times",
             order: "4",
             qid: "5",
-            text: '<p>'+JSON.stringify(hrs)+'</p>',
+            text: JSON.stringify(hrs),
             type: "control_text"
         }
 

@@ -12,16 +12,15 @@ class RequestHandler {
     }
 
     async sendSubmission(id,note){
-        let submission = {
-            '4':note
-        }
+        let submission = new FormData();
+        submission.set('submission[4]',note);
 
         var baseURL = 'http://api.jotform.com/form/'
 
         await axios({
             method: 'POST',
             url: baseURL+id+'/submissions?apiKey='+this.apiKey,
-            data: qs.stringify(submission)
+            data: submission
         }).then((resp)=>console.log(resp))
     }
 
@@ -77,12 +76,12 @@ class RequestHandler {
 
     postForm(data){
         var baseURL = 'http://api.jotform.com/form?apiKey='
-        var notificationData = {
-          "app_id": "eb163d0d-1c91-4c62-8875-c3fd70489838",
-          "included_segments": ["All"],
-          "data": {"foo": "bar"},
-          "contents": {"en": "Your reminder is scheduled!"}
-        }
+        // var notificationData = {
+        //   "app_id": "eb163d0d-1c91-4c62-8875-c3fd70489838",
+        //   "included_segments": ["All"],
+        //   "data": {"foo": "bar"},
+        //   "contents": {"en": "Your reminder is scheduled!"}
+        // }
         axios({
             method: 'POST',
             url: baseURL+this.apiKey,

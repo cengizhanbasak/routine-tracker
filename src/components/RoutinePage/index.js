@@ -72,7 +72,7 @@ class RoutinePage extends Component {
                 var sanitize = function(htmlString){
                   return marked(toMarkdown(htmlString), {sanitize: true})
                 }
-                var hoursInfo = JSON.parse(this.state.questions[5].text.substr(3,this.state.questions[5].text.length-7));
+                var hoursInfo = JSON.parse(this.state.questions[5].text);
                 return (
                     <div className="routine-page">
                         <h1 className="routine-title">{this.state.info.title.substr(15)}</h1>
@@ -105,7 +105,7 @@ class RoutinePage extends Component {
                         }
                         { this.renderSubmissionForm() }
 
-                        <div className="deleteFormButton" onClick={this.onRemoveFormClick}>Delete Form</div>
+                        <div className="deleteFormButton" onClick={this.onRemoveFormClick}>Delete Routine</div>
 
                         {
                             this.state.redirect !== ''

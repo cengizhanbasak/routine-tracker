@@ -33,21 +33,15 @@ class TaskList extends Component {
                 {
                     this.props.routineForms.map((form,index)=> {
                         return (
-                            <li className="taskItem" key={index} onClick={() => this.onRoutineClick(form.id)}>
+                            <li className="taskItem" key={index}>
                                 <div className="name">
                                     {form.title.substr(15)}
                                 </div>
                                 <div className="time">
-                                    12:30
+                                    Done: {form.count} time(s)
                                 </div>
-                                <div className="recentProgress">
-                                    <div className="dayProgress done">Done</div>
-                                    <div className="dayProgress done">Done</div>
-                                    <div className="dayProgress done">Done</div>
-                                    <div className="dayProgress fail">Fail</div>
-                                    <div className="dayProgress inProgress">-</div>
-                                    <div className="dayProgress inProgress">-</div>
-                                    <div className="dayProgress inProgress">-</div>
+                                <div className="detailsButton" onClick={() => this.onRoutineClick(form.id)}>
+                                    Show Details
                                 </div>
                                 { this.state.redirect !== '' && <Redirect to={this.state.redirect} />}
                             </li>

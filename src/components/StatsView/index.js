@@ -5,6 +5,9 @@ import './StatsView.css';
 class StatsView extends Component {
 
     render(){
+        var totalRecords = 0;
+        this.props.routinesList.forEach((routine)=> totalRecords += parseInt(routine.count) )
+
         return (
             <div className="Stats-page">
                 <div className="Stats-header">
@@ -13,12 +16,12 @@ class StatsView extends Component {
                         <h1>Routines Tracking</h1>
                     </div>
                     <div className="col taskFill">
-                        <h1 className="big">6</h1>
-                        <h1>Days Streak</h1>
+                        <h1 className="big">{totalRecords}</h1>
+                        <h1>Total Routine Records</h1>
                     </div>
                     <div className="col taskPercent">
-                        <h1 className="big">74%</h1>
-                        <h1>Completion</h1>
+                        <h1 className="big">0</h1>
+                        <h1>Achievements</h1>
                     </div>
                 </div>
             </div>
