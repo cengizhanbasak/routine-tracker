@@ -6,7 +6,7 @@ class StatsView extends Component {
 
     render(){
         var totalRecords = 0;
-        this.props.routinesList.forEach((routine)=> totalRecords += parseInt(routine.count) )
+        this.props.routinesList.forEach((routine)=> totalRecords += parseInt(routine.count,10) )
 
         return (
             <div className="Stats-page">

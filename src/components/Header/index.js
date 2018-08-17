@@ -10,6 +10,14 @@ class Header extends Component {
             username:'',
             password:''
         }
+        if(localStorage.getItem('user')!==''){
+            requestHandler.setAPIKey(JSON.parse(localStorage.getItem('user')).appKey)
+        }
+
+        if(requestHandler.getAPIKey()!==''){
+            this.props.actions.LogIn();
+            this.props.actions.SetUser(JSON.parse(localStorage.getItem('user')))
+        }
     }
 
     OnLoginClick= (event) =>
@@ -28,28 +36,19 @@ class Header extends Component {
             if(resp.data.responseCode===200){
                 this.props.actions.LogIn();
                 this.props.actions.SetUser(resp.data.content);
+                requestHandler.setAPIKey(resp.data.content.appKey)
+                localStorage.setItem('user',JSON.stringify(resp.data.content));
             }else{
-                window.alert("An error occured, try again later.")
+                console.log(resp.data.message)
             }
         });
 
-        //
-        // window.JF.login(
-        //     () => {
-        //     window.JF.getUser((user) => {
-        //         this.props.actions.LogIn();
-        //         this.props.actions.SetUser(user);
-        //     },(err) => console.log(err) )
-        //
-        //     }
-        //     ,
-        //     (err) => console.log(err)
-        // );
     }
 
     OnLogoutClick= () => {
-        window.JF.logout();
+        requestHandler.logOut();
         this.props.actions.LogOut();
+        localStorage.setItem('user','')
     }
 
     onUsernameInputChange=(event) => {
