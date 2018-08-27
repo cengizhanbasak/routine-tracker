@@ -1,5 +1,6 @@
 const initialState = {
   routinesList: [],
+  inactivesList: [],
   loggedIn: false,
   user: {},
   activeRoutine: ''
@@ -12,6 +13,8 @@ const routineApp = (state = initialState, action) => {
             return Object.assign({},state,{routinesList:action.list})
         case 'SET_ACTIVE_ROUTINE':
             return Object.assign({},state,{activeRoutine:action.id})
+        case 'SET_INACTIVE_ROUTINESLIST':
+            return Object.assign({},state,{inactivesList:action.list})
         case 'LOG_IN':
             return Object.assign({},state,{loggedIn:true})
         case 'LOG_OUT':

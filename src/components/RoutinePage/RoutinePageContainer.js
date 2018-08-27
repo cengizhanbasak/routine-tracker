@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 
 const mapStateToProps = (state,props) => ({
         activeRoutine: state.activeRoutine,
-        routinesList: state.routinesList,
+        routinesList: state.routinesList.concat(state.inactivesList),
         loggedIn: state.loggedIn,
 });
 

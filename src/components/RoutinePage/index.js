@@ -20,6 +20,7 @@ class RoutinePage extends Component {
 
     }
     componentDidMount(){
+        console.log(this.state.info);
         requestHandler.getQuestions(this.props.activeRoutine).then((resp)=>{
             this.setState({questions:resp})
             requestHandler.getSubmissions(this.props.activeRoutine).then((resp)=>{
@@ -32,6 +33,11 @@ class RoutinePage extends Component {
     onRemoveFormClick = ()=>
     {
         requestHandler.removeForm(this.props.activeRoutine).then(()=> this.setState({redirect:'/dashboard/tasks'}) )
+    }
+
+    onActivateButtonClick = ()=>
+    {
+        requestHandler.activateForm(this.props.activeRoutine).then(()=> this.setState({redirect:'/dashboard/tasks'}) )
     }
 
     onSubmitForm=(event)=>
@@ -127,27 +133,79 @@ class RoutinePage extends Component {
                                 }
                             </div>
                         </div>
-                        <div className="allSubmissionsSection">
-                            {
-                                !this.state.showAll
-                                &&
-                                (<span onClick={()=>this.setState({showAll:true})}>Show All Submissions</span>)
-                            }
-                            {
-                                this.state.showAll
-                                &&
-                                this.state.submissions.map((submission)=>{
-                                    return (
-                                        <div className="submissionInfo">
-                                            <p>Date: {moment.tz(submission.created_at.toString(),'America/New_York')
-                                                        .tz(moment.tz.guess())
-                                                        .format('MMMM Do YYYY, h:mm:ss a')}</p>
-                                                    <p>Note: {submission.answers[4].answer}</p>
-                                        </div>
+                        { this.state.info.status !== "DELETED"
+                        &&
+                        (
+                          <div>
+                            <div className="submissionInfoSection">
+                                {
+                                    this.state.submissions.length !== 0
+                                    &&
+                                    (
+                                    <div className="submissionInfo">
+                                        <h3>Last Submission:</h3>
+                                        <p>Date: {moment.tz(this.state.submissions[0].created_at.toString(),'America/New_York')
+                                                    .tz(moment.tz.guess())
+                                                    .format('MMMM Do YYYY, h:mm:ss a')}</p>
+                                        <p>Note: {this.state.submissions[0].answers[4].answer}</p>
+                                    </div>
                                     )
-                                })
-                            }
-                        </div>
+                                }
+                                {
+                                    this.state.submissions.length === 0
+                                    &&
+                                    (
+                                    <div className="submissionInfo">
+                                        <h3>No Submissions Yet</h3>
+                                    </div>
+                                    )
+                                }
+                                { this.renderSubmissionForm() }
+
+                                <div className="deleteFormButton" onClick={this.onRemoveFormClick}>Archive Routine</div>
+
+
+                            </div>
+                            <div className="allSubmissionsSection">
+                                {
+                                    !this.state.showAll
+                                    &&
+                                    (<span onClick={()=>this.setState({showAll:true})}>Show All Submissions</span>)
+                                }
+                                {
+                                    this.state.showAll
+                                    &&
+                                    this.state.submissions.map((submission)=>{
+                                        return (
+                                            <div className="submissionInfo">
+                                                <p>Date: {moment.tz(submission.created_at.toString(),'America/New_York')
+                                                            .tz(moment.tz.guess())
+                                                            .format('MMMM Do YYYY, h:mm:ss a')}</p>
+                                                        <p>Note: {submission.answers[4].answer}</p>
+                                            </div>
+                                        )
+                                    })
+                                }
+                            </div>
+                          </div>
+                        )
+                        }
+                        {
+                            this.state.info.status === "DELETED"
+                            &&
+                            (
+                                <div>
+                                    <h2>INACTIVE</h2>
+                                    <div className="activateButton" onClick={this.onActivateButtonClick} >Activate Routine</div>
+                                </div>
+                            )
+                        }
+                        {
+                            this.state.redirect !== ''
+                            &&
+                            <Redirect to={this.state.redirect} />
+                        }
+
                     </div>
                 )
             }

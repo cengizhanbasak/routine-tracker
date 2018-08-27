@@ -6,6 +6,10 @@
     border-top: 1px solid #333;
 }
 
+.TaskListTitle{
+    margin: 8px;
+}
+
 .taskItem {
     display: flex;
     flex-direction: row;
