@@ -99,6 +99,17 @@ class Header extends Component {
 
                     </div>
                 </div>
+                {
+                    !this.props.loggedIn
+                    &&
+                    (
+                        <form className="mobile-login" onSubmit={this.OnLoginClick}>
+                            <input type="text" placeholder="Username" onChange={this.onUsernameInputChange} name="username"/>
+                            <input type="password" placeholder="Password" onChange={this.onPasswordInputChange} name="password"/>
+                            <input type="submit" value="Login" />
+                        </form>
+                    )
+                }
             </header>
         )
     }

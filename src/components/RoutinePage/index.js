@@ -2,8 +2,7 @@ import React, { Component } from 'react';
 import './RoutinePage.css';
 import { Redirect } from 'react-router-dom';
 import requestHandler from '../RequestHandler';
-import toMarkdown from 'to-markdown'
-import marked from 'marked'
+import moment from 'moment-timezone';
 
 class RoutinePage extends Component {
     constructor(props){
@@ -50,7 +49,10 @@ class RoutinePage extends Component {
     }
 
     renderSubmissionForm = ()=>{
-        if(this.state.submissions.length === 0 || new Date() - new Date(this.state.submissions[0].created_at) >= 72000000 )
+        let currentDate = new Date();
+        if(this.state.submissions.length !== 0) {var lastActivityDate = new Date(this.state.submissions[0].created_at);}
+        const hours20 = 72000000; // 20 hours as miliseconds
+        if(this.state.submissions.length === 0 || currentDate - lastActivityDate >= hours20 )
             return (
                 <div className="submissionForm">
                     <h2>Record today's activity</h2>
@@ -61,7 +63,13 @@ class RoutinePage extends Component {
                     </form>
                 </div>
                 )
-            return (<h2 className="submissionWarning">You have to wait at least 20 hours before recording another activity.</h2>)
+        else{
+            var timeLeft = moment
+                .tz(this.state.submissions[0].created_at.toString(),'America/New_York')
+                .tz(moment.tz.guess()).add(20,'hours')
+                .diff(moment(currentDate.toString()),'hours');
+            return (<h2 className="submissionWarning">{timeLeft} hours to be able to record next activity.</h2>)
+        }
     }
 
     render(){
@@ -69,49 +77,52 @@ class RoutinePage extends Component {
             if(this.state.loading){
                 return (<h1>Please Wait...</h1>)
             }else{
-                var sanitize = function(htmlString){
-                  return marked(toMarkdown(htmlString), {sanitize: true})
-                }
                 var hoursInfo = JSON.parse(this.state.questions[5].text);
                 return (
                     <div className="routine-page">
-                        <h1 className="routine-title">{this.state.info.title.substr(15)}</h1>
-                        <div dangerouslySetInnerHTML={{__html: sanitize(this.state.questions[2].text) }}></div>
-                        <div className="daysInfo">
-                            <h3>Days:</h3>
+                        <div className="routineInfoSection">
+                            <h1 className="routine-title">{this.state.info.title.substr(15)}</h1>
+                            <div dangerouslySetInnerHTML={{__html: this.state.questions[2].text}}></div>
+                            <div className="daysInfo">
+                                <h3>Days:</h3>
+                                {
+                                    Object.keys(hoursInfo).map((day,index) => (<p key={index}>{day}: {hoursInfo[day]}</p>) )
+                                }
+                            </div>
+                        </div>
+                        <div className="submissionInfoSection">
                             {
-                                Object.keys(hoursInfo).map((day,index) => (<p key={index}>{day}: {hoursInfo[day]}</p>) )
+                                this.state.submissions.length !== 0
+                                &&
+                                (
+                                <div className="submissionInfo">
+                                    <h3>Last Submission:</h3>
+                                    <p>Date: {moment.tz(this.state.submissions[0].created_at.toString(),'America/New_York')
+                                                .tz(moment.tz.guess())
+                                                .format('MMMM Do YYYY, h:mm:ss a')}</p>
+                                    <p>Note: {this.state.submissions[0].answers[4].answer}</p>
+                                </div>
+                                )
+                            }
+                            {
+                                this.state.submissions.length === 0
+                                &&
+                                (
+                                <div className="submissionInfo">
+                                    <h3>No Submissions Yet</h3>
+                                </div>
+                                )
+                            }
+                            { this.renderSubmissionForm() }
+
+                            <div className="deleteFormButton" onClick={this.onRemoveFormClick}>Delete Routine</div>
+
+                            {
+                                this.state.redirect !== ''
+                                &&
+                                <Redirect to={this.state.redirect} />
                             }
                         </div>
-                        {
-                            this.state.submissions.length !== 0
-                            &&
-                            (
-                            <div className="submissionInfo">
-                                <h3>Last Submission:</h3>
-                                <p>Date: {this.state.submissions[0].created_at}</p>
-                                <p>Note: {this.state.submissions[0].answers[4].answer}</p>
-                            </div>
-                            )
-                        }
-                        {
-                            this.state.submissions.length === 0
-                            &&
-                            (
-                            <div className="submissionInfo">
-                                <h3>No Submissions Yet</h3>
-                            </div>
-                            )
-                        }
-                        { this.renderSubmissionForm() }
-
-                        <div className="deleteFormButton" onClick={this.onRemoveFormClick}>Delete Routine</div>
-
-                        {
-                            this.state.redirect !== ''
-                            &&
-                            <Redirect to={this.state.redirect} />
-                        }
                     </div>
                 )
             }
