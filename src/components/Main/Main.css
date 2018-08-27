@@ -12,14 +12,36 @@
     padding: 10px;
 }
 
-.dbhead-content {
-    display: flex;
-    justify-content: space-between;
-    padding: 40px;
+
+
+@media only screen and (max-width: 767px) {
+    .dbhead-content{
+        display: flex;
+        flex-direction: column;
+    }
+    .NewHabitButton {
+        margin: auto;
+    }
+    .Menu{
+        margin: auto;
+    }
 }
 
+@media only screen and (min-width: 768px) {
+    .dbhead-content {
+        display: flex;
+        justify-content: space-between;
+        padding: 40px;
+    }
+    .NewHabitButton {
+        float: right;
+    }
+    .Menu {
+        float: left
+    }
+
+}
 .Menu {
-    float: left;
     display:flex;
     align-items:flex-end;
 }
@@ -32,13 +54,17 @@
     color: white;
 }
 
+.Menu a{
+    color: #00a7ff;
+}
+
 .NewHabitButton {
     padding: 10px;
     background: #00a7ff;
     border-radius: 10px;
     width: 200px;
     text-align: center;
-    float: right;
+    color: white;
 }
 
 .NewHabitButton:hover {

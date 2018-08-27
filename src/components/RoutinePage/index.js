@@ -75,43 +75,47 @@ class RoutinePage extends Component {
                 var hoursInfo = JSON.parse(this.state.questions[5].text);
                 return (
                     <div className="routine-page">
-                        <h1 className="routine-title">{this.state.info.title.substr(15)}</h1>
-                        <div dangerouslySetInnerHTML={{__html: sanitize(this.state.questions[2].text) }}></div>
-                        <div className="daysInfo">
-                            <h3>Days:</h3>
+                        <div className="routineInfoSection">
+                            <h1 className="routine-title">{this.state.info.title.substr(15)}</h1>
+                            <div dangerouslySetInnerHTML={{__html: sanitize(this.state.questions[2].text) }}></div>
+                            <div className="daysInfo">
+                                <h3>Days:</h3>
+                                {
+                                    Object.keys(hoursInfo).map((day,index) => (<p key={index}>{day}: {hoursInfo[day]}</p>) )
+                                }
+                            </div>
+                        </div>
+                        <div className="submissionInfoSection">
                             {
-                                Object.keys(hoursInfo).map((day,index) => (<p key={index}>{day}: {hoursInfo[day]}</p>) )
+                                this.state.submissions.length !== 0
+                                &&
+                                (
+                                <div className="submissionInfo">
+                                    <h3>Last Submission:</h3>
+                                    <p>Date: {this.state.submissions[0].created_at}</p>
+                                    <p>Note: {this.state.submissions[0].answers[4].answer}</p>
+                                </div>
+                                )
+                            }
+                            {
+                                this.state.submissions.length === 0
+                                &&
+                                (
+                                <div className="submissionInfo">
+                                    <h3>No Submissions Yet</h3>
+                                </div>
+                                )
+                            }
+                            { this.renderSubmissionForm() }
+
+                            <div className="deleteFormButton" onClick={this.onRemoveFormClick}>Delete Routine</div>
+
+                            {
+                                this.state.redirect !== ''
+                                &&
+                                <Redirect to={this.state.redirect} />
                             }
                         </div>
-                        {
-                            this.state.submissions.length !== 0
-                            &&
-                            (
-                            <div className="submissionInfo">
-                                <h3>Last Submission:</h3>
-                                <p>Date: {this.state.submissions[0].created_at}</p>
-                                <p>Note: {this.state.submissions[0].answers[4].answer}</p>
-                            </div>
-                            )
-                        }
-                        {
-                            this.state.submissions.length === 0
-                            &&
-                            (
-                            <div className="submissionInfo">
-                                <h3>No Submissions Yet</h3>
-                            </div>
-                            )
-                        }
-                        { this.renderSubmissionForm() }
-
-                        <div className="deleteFormButton" onClick={this.onRemoveFormClick}>Delete Routine</div>
-
-                        {
-                            this.state.redirect !== ''
-                            &&
-                            <Redirect to={this.state.redirect} />
-                        }
                     </div>
                 )
             }
