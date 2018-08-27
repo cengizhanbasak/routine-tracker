@@ -14,7 +14,8 @@ class RoutinePage extends Component {
             submissions: [],
             loading:true,
             note: '',
-            redirect: ''
+            redirect: '',
+            showAll: false
             }
 
     }
@@ -73,6 +74,7 @@ class RoutinePage extends Component {
     }
 
     render(){
+
         if(this.props.loggedIn){
             if(this.state.loading){
                 return (<h1>Please Wait...</h1>)
@@ -80,47 +82,70 @@ class RoutinePage extends Component {
                 var hoursInfo = JSON.parse(this.state.questions[5].text);
                 return (
                     <div className="routine-page">
-                        <div className="routineInfoSection">
-                            <h1 className="routine-title">{this.state.info.title.substr(15)}</h1>
-                            <div dangerouslySetInnerHTML={{__html: this.state.questions[2].text}}></div>
-                            <div className="daysInfo">
-                                <h3>Days:</h3>
+                        <div className="routine-page-top">
+                            <div className="routineInfoSection">
+                                <h1 className="routine-title">{this.state.info.title.substr(15)}</h1>
+                                <div dangerouslySetInnerHTML={{__html: this.state.questions[2].text}}></div>
+                                <div className="daysInfo">
+                                    <h3>Days:</h3>
+                                    {
+                                        Object.keys(hoursInfo).map((day,index) => (<p key={index}>{day}: {hoursInfo[day]}</p>) )
+                                    }
+                                </div>
+                            </div>
+                            <div className="submissionInfoSection">
                                 {
-                                    Object.keys(hoursInfo).map((day,index) => (<p key={index}>{day}: {hoursInfo[day]}</p>) )
+                                    this.state.submissions.length !== 0
+                                    &&
+                                    (
+                                    <div className="submissionInfo">
+                                        <h3>Last Submission:</h3>
+                                        <p>Date: {moment.tz(this.state.submissions[0].created_at.toString(),'America/New_York')
+                                                    .tz(moment.tz.guess())
+                                                    .format('MMMM Do YYYY, h:mm:ss a')}</p>
+                                        <p>Note: {this.state.submissions[0].answers[4].answer}</p>
+                                    </div>
+                                    )
+                                }
+                                {
+                                    this.state.submissions.length === 0
+                                    &&
+                                    (
+                                    <div className="submissionInfo">
+                                        <h3>No Submissions Yet</h3>
+                                    </div>
+                                    )
+                                }
+                                { this.renderSubmissionForm() }
+
+                                <div className="deleteFormButton" onClick={this.onRemoveFormClick}>Delete Routine</div>
+
+                                {
+                                    this.state.redirect !== ''
+                                    &&
+                                    <Redirect to={this.state.redirect} />
                                 }
                             </div>
                         </div>
-                        <div className="submissionInfoSection">
+                        <div className="allSubmissionsSection">
                             {
-                                this.state.submissions.length !== 0
+                                !this.state.showAll
                                 &&
-                                (
-                                <div className="submissionInfo">
-                                    <h3>Last Submission:</h3>
-                                    <p>Date: {moment.tz(this.state.submissions[0].created_at.toString(),'America/New_York')
-                                                .tz(moment.tz.guess())
-                                                .format('MMMM Do YYYY, h:mm:ss a')}</p>
-                                    <p>Note: {this.state.submissions[0].answers[4].answer}</p>
-                                </div>
-                                )
+                                (<span onClick={()=>this.setState({showAll:true})}>Show All Submissions</span>)
                             }
                             {
-                                this.state.submissions.length === 0
+                                this.state.showAll
                                 &&
-                                (
-                                <div className="submissionInfo">
-                                    <h3>No Submissions Yet</h3>
-                                </div>
-                                )
-                            }
-                            { this.renderSubmissionForm() }
-
-                            <div className="deleteFormButton" onClick={this.onRemoveFormClick}>Delete Routine</div>
-
-                            {
-                                this.state.redirect !== ''
-                                &&
-                                <Redirect to={this.state.redirect} />
+                                this.state.submissions.map((submission)=>{
+                                    return (
+                                        <div className="submissionInfo">
+                                            <p>Date: {moment.tz(submission.created_at.toString(),'America/New_York')
+                                                        .tz(moment.tz.guess())
+                                                        .format('MMMM Do YYYY, h:mm:ss a')}</p>
+                                                    <p>Note: {submission.answers[4].answer}</p>
+                                        </div>
+                                    )
+                                })
                             }
                         </div>
                     </div>
