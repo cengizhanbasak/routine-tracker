@@ -19,14 +19,40 @@
       work correctly both with client-side routing and a non-root public URL.
       Learn how to configure a non-root public URL by running `npm run build`.
     -->
-    <title>Habits App</title>
+    <script src="https://cdn.onesignal.com/sdks/OneSignalSDK.js" async=""></script>
+    <script>
+    var OneSignal = window.OneSignal || [];
+    OneSignal.push(function() {
+      OneSignal.init({
+        appId: "eb163d0d-1c91-4c62-8875-c3fd70489838",
+        autoRegister: false,
+        notifyButton: {
+            enable: true,
+            colors: { // Customize the colors of the main button and dialog popup button
+              'circle.background': '#00a7ff',
+              'circle.foreground': 'white',
+              'badge.background': '#00a7ff',
+              'badge.foreground': 'white',
+              'badge.bordercolor': 'white',
+              'pulse.color': 'white',
+              'dialog.button.background.hovering': '#00a7ff',
+              'dialog.button.background.active': '#00a7ff',
+              'dialog.button.background': '#00a7ff',
+              'dialog.button.foreground': 'white'
+            },
+        },
+
+      });
+    });
+    </script>
+
+    <title>Routine Tracker App</title>
   </head>
   <body>
     <noscript>
       You need to enable JavaScript to run this app.
     </noscript>
     <div id="root"></div>
-    <script src="https://js.jotform.com/JotForm.js"></script>
 
     <!--
       This HTML file is a template.
