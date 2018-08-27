@@ -61,3 +61,14 @@ form textarea {
         width: 45vw;
     }
 }
+
+.activateButton{
+    width: 200px;
+    line-height: 2em;
+    text-align: center;
+    font-size: 1.2em;
+    color: #fff;
+    background: #00a7ff;
+    border-radius: 15px;
+    margin: 20px 0px;
+}

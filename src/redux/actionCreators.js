@@ -1,4 +1,4 @@
-import {setRoutinesList, logIn, logOut, setUser, setActiveRoutine} from './actions';
+import {setRoutinesList, setInactiveRoutinesList, logIn, logOut, setUser, setActiveRoutine} from './actions';
 
 export const LogIn = () => (dispatch) => {
     dispatch(logIn());
@@ -10,6 +10,9 @@ export const LogOut = () => (dispatch) => {
 
 export const SetRoutinesList = (list) => (dispatch) => {
     dispatch(setRoutinesList(list));
+}
+export const SetInactiveRoutinesList = (list) => (dispatch) => {
+    dispatch(setInactiveRoutinesList(list));
 }
 
 export const SetUser = (user) => (dispatch) => {

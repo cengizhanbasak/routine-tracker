@@ -8,6 +8,11 @@ export const setRoutinesList = list => ({
     list
 })
 
+export const setInactiveRoutinesList = list => ({
+    type: 'SET_INACTIVE_ROUTINESLIST',
+    list
+})
+
 export const setActiveRoutine = (id) => ({
     type: 'SET_ACTIVE_ROUTINE',
     id

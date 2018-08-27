@@ -141,7 +141,15 @@ class RequestHandler {
             method: 'DELETE',
             url: baseURL+id+'?apiKey='+this.apiKey
         })
-        return
+    }
+
+    async activateForm(id){
+        var baseURL = 'https://api.jotform.com/form/'
+        await axios({
+            method: 'POST',
+            data: qs.stringify({properties:{status:'ENABLED'}}),
+            url: baseURL+id+'/properties?apiKey='+this.apiKey
+        })
     }
 }
 
