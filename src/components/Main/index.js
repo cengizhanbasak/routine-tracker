@@ -3,7 +3,7 @@ import { Route, Link } from 'react-router-dom';
 import './Main.css';
 import TaskListContainer from '../TaskList/TaskListContainer';
 import StatsViewContainer from '../StatsView/StatsViewContainer';
-import HabitForm from '../HabitForm';
+import HabitFormContainer from '../HabitForm/HabitFormContainer';
 import RoutinePageContainer from '../RoutinePage/RoutinePageContainer';
 
 
@@ -25,8 +25,9 @@ render(){
             </div>
                 <Route exact path={this.props.match.url + "/tasks"} render={()=> <TaskListContainer/>}/>
                 <Route path={this.props.match.url + "/stats"} render={() => <StatsViewContainer/>}/>
-                <Route path={this.props.match.url + "/tasks/:id([0-9]*)"} render={()=> <RoutinePageContainer />}/>
-                <Route path={this.props.match.url + "/tasks/new"} render={()=> <HabitForm/>}/>
+                <Route exact path={this.props.match.url + "/tasks/:id([0-9]*)"} render={()=> <RoutinePageContainer />}/>
+                <Route exact path={this.props.match.url + "/tasks/:id([0-9]*)/edit"} render={()=> <HabitFormContainer mode="edit"/>}/>
+                <Route path={this.props.match.url + "/tasks/new"} render={()=> <HabitFormContainer mode="new" />}/>
         </div>
     )
 }

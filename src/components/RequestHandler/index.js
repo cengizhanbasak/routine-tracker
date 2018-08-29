@@ -135,6 +135,31 @@ class RequestHandler {
 
     }
 
+    editForm(id,data){
+        var baseURL = 'http://api.jotform.com/form/'
+        axios({
+            method: 'POST',
+            url: baseURL+id+'/properties?apiKey='+this.apiKey,
+            data: qs.stringify({"properties[title]":data["properties[title]"]})
+        })
+        axios({
+            method: 'POST',
+            url: baseURL+id+'/question/1?apiKey='+this.apiKey,
+            data: qs.stringify({"question[text]":data["questions[0][text]"]})
+        })
+        axios({
+            method: 'POST',
+            url: baseURL+id+'/question/2?apiKey='+this.apiKey,
+            data: qs.stringify({"question[text]":data["questions[1][text]"]})
+        })
+        axios({
+            method: 'POST',
+            url: baseURL+id+'/question/5?apiKey='+this.apiKey,
+            data: qs.stringify({"question[text]":data["questions[4]"].text})
+        })
+
+    }
+
     async removeForm(id){
         var baseURL = 'https://api.jotform.com/form/'
         await axios({

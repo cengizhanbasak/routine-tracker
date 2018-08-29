@@ -39,6 +39,9 @@ class RoutinePage extends Component {
     {
         requestHandler.activateForm(this.props.activeRoutine).then(()=> this.setState({redirect:'/dashboard/tasks'}) )
     }
+    onEditClick = () => {
+        this.setState({redirect:`/dashboard/tasks/${this.props.activeRoutine}/edit`})
+    }
 
     onSubmitForm=(event)=>
     {
@@ -136,6 +139,13 @@ class RoutinePage extends Component {
                             )
                             }
                         </div>
+                        {
+                            this.state.info.status !== "DELETED"
+                            &&
+                            (
+                                <div onClick={this.onEditClick}>Edit Routine</div>
+                            )
+                        }
                         {
                             this.state.info.status !== "DELETED"
                             &&
