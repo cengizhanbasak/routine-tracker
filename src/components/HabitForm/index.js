@@ -7,15 +7,37 @@ class HabitForm extends Component {
 
     constructor(props){
         super(props)
-        this.state={
-            title:'',
-            description:'',
-            diffEveryDay:false,
-            redirect:'',
-            activeDays: [],
-            hours: null,
+        if(this.props.mode === 'new'){
+            this.state={
+                title:'',
+                description:'',
+                diffEveryDay:false,
+                redirect:'',
+                activeDays: [],
+                hours: null,
+            }
         }
+
+        if(this.props.mode === 'edit'){
+            let routine = this.props.routines.filter( (form) => form.id === this.props.active )[0];
+            this.state={
+                title:routine.title.substr(15),
+                description:'',
+                diffEveryDay:false,
+                redirect:'',
+                activeDays: [],
+                hours: null,
+            }
+        }
+
     }
+
+    componentDidMount(){
+        requestHandler.getQuestions(this.props.active).then((resp)=>{
+            this.setState({description:resp[2].text.substr(3,resp[2].text.length-7)})
+        })
+    }
+
 
 
     onTitleInputChange=(event)=>{
@@ -54,7 +76,6 @@ class HabitForm extends Component {
 
     onSubmitForm = (event) => {
         event.preventDefault();
-
 
         var hrs = {}
         if(!this.state.diffEveryDay){
@@ -167,7 +188,7 @@ class HabitForm extends Component {
             "questions[0][name]":"Header",
             "questions[1][name]":`Description`,
             "questions[1][type]":`control_text`,
-            "questions[1][text]":`<p>${this.state.description}<p>`,
+            "questions[1][text]":`<p>${this.state.description}</p>`,
             "questions[1][order]":2,
             "questions[1][qid]":2,
             "questions[2]":date,
@@ -181,7 +202,13 @@ class HabitForm extends Component {
         };
         console.log(formObject);
 
-        requestHandler.postForm(formObject);
+        if(this.props.mode==='new'){
+            requestHandler.postForm(formObject);
+        }
+        if(this.props.mode==='edit'){
+            requestHandler.editForm(this.props.active,formObject);
+        }
+
         this.setState({redirect:'/dashboard/tasks'})
     }
 
@@ -193,10 +220,10 @@ class HabitForm extends Component {
                 <form onSubmit={this.onSubmitForm}>
 
                     <label>Title*: </label><br/>
-                    <input className="input_name" type="text" onChange={this.onTitleInputChange}/><br/>
+                    <input className="input_name" type="text" value={this.state.title} onChange={this.onTitleInputChange}/><br/>
 
                     <label>Description: </label><br/>
-                    <textarea className="input_descr" onChange={this.onDescriptionInputChange}/><br/>
+                    <textarea className="input_descr"  value={this.state.description} onChange={this.onDescriptionInputChange}/><br/>
 
                     <label>Active Days*: </label><br/>
                     { days.map((day,index)=> (<span key={index}><input type="checkbox" name={day} onChange={this.onDayChange}/> {day} <br/></span>)) }
