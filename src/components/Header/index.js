@@ -10,13 +10,16 @@ class Header extends Component {
             username:'',
             password:''
         }
+        if (localStorage.getItem('user') === null) {
+            localStorage.setItem('user','');
+        }
         if(localStorage.getItem('user')!==''){
-            requestHandler.setAPIKey(JSON.parse(localStorage.getItem('user')).appKey)
+            requestHandler.setAPIKey(JSON.parse(localStorage.getItem('user')).appKey);
         }
 
         if(requestHandler.getAPIKey()!==''){
             this.props.actions.LogIn();
-            this.props.actions.SetUser(JSON.parse(localStorage.getItem('user')))
+            this.props.actions.SetUser(JSON.parse(localStorage.getItem('user')));
         }
     }
 
