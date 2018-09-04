@@ -33,9 +33,11 @@ class HabitForm extends Component {
     }
 
     componentDidMount(){
-        requestHandler.getQuestions(this.props.active).then((resp)=>{
-            this.setState({description:resp[2].text.substr(3,resp[2].text.length-7)})
-        })
+        if(this.props.mode === 'edit' ){
+            requestHandler.getQuestions(this.props.active).then((resp)=>{
+                this.setState({description:resp[2].text.substr(3,resp[2].text.length-7)})
+            })
+        }
     }
 
 

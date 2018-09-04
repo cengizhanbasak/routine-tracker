@@ -6,7 +6,7 @@ import { BrowserRouter as Router } from 'react-router-dom'
 import { createStore, applyMiddleware, compose } from 'redux';
 import { Provider } from 'react-redux';
 import thunk from 'redux-thunk';
-import registerServiceWorker from './registerServiceWorker';
+import { unregister } from './registerServiceWorker';
 import routineApp from './redux/reducer.js';
 
 
@@ -16,6 +16,15 @@ const store = createStore(routineApp,
             window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
         )
     );
-console.log(store);
 ReactDOM.render(<Provider store={store}><Router><AppContainer /></Router></Provider>, document.getElementById('root'));
-registerServiceWorker();
+unregister();
+if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('/serviceWorker.js',{scope:'/'})
+    .then((registration)=>{
+        console.log("SW is registered on scope: " + registration.scope);
+        console.log(registration);
+    })
+    .catch((err)=>{
+        console.log('SW failed to register', err);
+    })
+}

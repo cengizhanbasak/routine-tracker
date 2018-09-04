@@ -13,7 +13,6 @@ class TaskList extends Component {
 
     componentDidMount() {
         requestHandler.getForms().then((response) => {
-            console.log(response);
             let routinesList = response.data.content.filter(
                 (form) => form.title.indexOf("{DailyRoutine}") !== -1 && form.status === "ENABLED" );
             this.props.setRoutines(routinesList);
