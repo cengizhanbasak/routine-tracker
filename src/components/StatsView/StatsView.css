@@ -33,3 +33,25 @@
 .big {
     font-size: 5em;
 }
+
+.achievements-section {
+    padding: 12px;
+}
+
+.achievements-list {
+    list-style-type: none;
+    padding: 0px;
+    width: 100%;
+}
+
+.achievements-list li {
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+    text-align: center;
+    line-height: 3;
+}
+
+.achievements-list li:hover {
+    background: #ddd;
+}
