@@ -37,7 +37,7 @@ class RequestHandler {
         let submission = new FormData();
         submission.set('submission[4]',note);
 
-        var baseURL = 'http://api.jotform.com/form/'
+        var baseURL = 'https://api.jotform.com/form/'
 
         await axios({
             method: 'POST',
@@ -49,7 +49,7 @@ class RequestHandler {
     async getForms(){
         let response = {}
 
-        var baseURL = 'http://api.jotform.com/user/forms?apiKey=';
+        var baseURL = 'https://api.jotform.com/user/forms?apiKey=';
 
         await axios({
             method: 'GET',
@@ -61,7 +61,7 @@ class RequestHandler {
     async getSubmissions(id){
         let response = {};
 
-        var baseURL = 'http://api.jotform.com/form/';
+        var baseURL = 'https://api.jotform.com/form/';
 
         await axios({
             method: 'GET',
@@ -74,7 +74,7 @@ class RequestHandler {
     async getQuestions(id){
         let response = {};
 
-        var baseURL = 'http://api.jotform.com/form/';
+        var baseURL = 'https://api.jotform.com/form/';
 
         await axios({
             method: 'GET',
@@ -97,7 +97,7 @@ class RequestHandler {
 
 
     postForm(data){
-        var baseURL = 'http://api.jotform.com/form?apiKey='
+        var baseURL = 'https://api.jotform.com/form?apiKey='
 
         axios({
             method: 'POST',
@@ -136,7 +136,7 @@ class RequestHandler {
     }
 
     editForm(id,data){
-        var baseURL = 'http://api.jotform.com/form/'
+        var baseURL = 'https://api.jotform.com/form/'
         axios({
             method: 'POST',
             url: baseURL+id+'/properties?apiKey='+this.apiKey,
