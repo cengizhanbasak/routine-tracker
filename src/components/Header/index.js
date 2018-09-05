@@ -21,8 +21,6 @@ class Header extends Component {
             this.props.actions.LogIn();
             this.props.actions.SetUser(JSON.parse(localStorage.getItem('user')));
         }
-        console.log(process.env.REACT_APP_ONESIGNAL_APP_ID);
-        console.log(process.env.REACT_APP_ONESIGNAL_API_KEY);
     }
 
     OnLoginClick= (event) =>

@@ -115,7 +115,7 @@ class RequestHandler {
                         var notificationData = {
                           "app_id": `${process.env.REACT_APP_ONESIGNAL_APP_ID}`,
                           "include_player_ids": [id],
-                          "data": {"foo": "bar"},
+                          "url":`http://localhost:3000/notifications?date=${date.toString()}&id=${id}`,
                           "send_after": date.toString(),
                           "contents": {"en": "You may have a routine coming on!"}
                         }
@@ -158,6 +158,28 @@ class RequestHandler {
             data: qs.stringify({"question[text]":data["questions[4]"].text})
         })
 
+    }
+
+    async ScheduleNotificationToNextWeek(playerID,date){
+        let currentDate = new Date(date);
+        let nextWeeksDate = new Date(currentDate.getTime()+7*24*60*60*1000);
+        var notificationData = {
+          "app_id": `${process.env.REACT_APP_ONESIGNAL_APP_ID}`,
+          "include_player_ids": [playerID],
+          "url":`http://localhost:3000/notifications?date=${nextWeeksDate.toString()}&id=${playerID}`,
+          "send_after": nextWeeksDate.toString(),
+          "contents": {"en": "You may have a routine coming on!"}
+        }
+        await axios({
+            method: 'POST',
+            url: 'https://onesignal.com/api/v1/notifications',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Basic ${process.env.REACT_APP_ONESIGNAL_API_KEY}`
+            },
+            data: notificationData
+        }).then((resp)=>console.log(resp))
+        return true;
     }
 
     async removeForm(id){
