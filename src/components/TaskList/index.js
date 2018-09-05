@@ -7,7 +7,7 @@ class TaskList extends Component {
 
     constructor (props){
         super(props);
-        this.state={ routineForms:[], redirect:'' }
+        this.state={ redirect:'' , showArchived:false }
     }
 
 
@@ -26,7 +26,7 @@ class TaskList extends Component {
         this.props.setActiveRoutine(id);
         this.setState({redirect:'/dashboard/tasks/'+id})
     }
-
+    onShowArchived = ()=>this.setState({showArchived:true})
     render()
     {
         return (
@@ -54,29 +54,36 @@ class TaskList extends Component {
                         })
                     }
                 </ul>
-                <h2 className="TaskListTitle">Archived Routines:</h2>
-                <ul className="Dashboard-list">
-                    {
-                        this.props.inactiveForms.map((form,index)=> {
-                            return (
-                                <li className="taskItem" key={index}>
-                                    <div className="name">
-                                        {form.title.substr(15)}
-                                    </div>
-                                    <div className="time">
-                                        Done: {form.count} time(s)
-                                    </div>
-                                    <div className="detailsButton" onClick={() => this.onRoutineClick(form.id)}>
-                                        Show Details
-                                    </div>
-                                    { this.state.redirect !== '' && <Redirect to={this.state.redirect} />}
-                                </li>
+                <h2 className="TaskListTitle" onClick={this.onShowArchived} >{!this.state.showArchived && 'Show'} Archived Routines</h2>
+                {
+                    this.state.showArchived
+                    &&
+                    (
+                        <ul className="Dashboard-list">
+                            {
+                                this.props.inactiveForms.map((form,index)=> {
+                                    return (
+                                        <li className="taskItem" key={index}>
+                                            <div className="name">
+                                                {form.title.substr(15)}
+                                            </div>
+                                            <div className="time">
+                                                Done: {form.count} time(s)
+                                            </div>
+                                            <div className="detailsButton" onClick={() => this.onRoutineClick(form.id)}>
+                                                Show Details
+                                            </div>
+                                            { this.state.redirect !== '' && <Redirect to={this.state.redirect} />}
+                                        </li>
 
 
-                            )
-                        })
-                    }
-                </ul>
+                                    )
+                                })
+                            }
+                        </ul>
+                    )
+                }
+
             </div>
         )
     }

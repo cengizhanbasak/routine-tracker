@@ -37,10 +37,10 @@ class Header extends Component {
         requestHandler.logIn(loginInfo).then((resp)=>{
             console.log(resp);
             if(resp.data.responseCode===200){
-                this.props.actions.LogIn();
                 this.props.actions.SetUser(resp.data.content);
                 requestHandler.setAPIKey(resp.data.content.appKey)
                 localStorage.setItem('user',JSON.stringify(resp.data.content));
+                this.props.actions.LogIn();
             }else{
                 console.log(resp.data.message)
             }

@@ -49,7 +49,7 @@ class RequestHandler {
     async getForms(){
         let response = {}
 
-        var baseURL = 'https://api.jotform.com/user/forms?apiKey=';
+        var baseURL = 'https://api.jotform.com/user/forms?limit=100&apiKey=';
 
         await axios({
             method: 'GET',
