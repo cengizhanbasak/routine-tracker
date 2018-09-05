@@ -36,19 +36,19 @@ self.addEventListener('activate', event => {
 // NOTIFICATION EVENTS
 
 self.addEventListener('push', (e)=>{
-    console.log('pushNotification');
+    alert('pushNotification');
     console.log(e);
 }),
 
 
 self.addEventListener('notificationclick', function(e) {
-  console.log('notificationClicked');
+  alert('notificationClicked');
   console.log(e);
 });
 
 self.addEventListener('notificationclose', function(e) {
   var notification = e.notification;
   var data = notification.data;
-  console.log('Closed notification');
+  alert('Closed notification');
   console.log(data);
 });

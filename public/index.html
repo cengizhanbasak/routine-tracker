@@ -24,8 +24,8 @@
     var OneSignal = window.OneSignal || [];
     OneSignal.push(function() {
       OneSignal.init({
-        appId: "eb163d0d-1c91-4c62-8875-c3fd70489838",
-        autoRegister: false,
+        appId: `${process.env.REACT_APP_ONESIGNAL_APP_ID}`,
+        autoRegister: true,
         notifyButton: {
             enable: true,
             colors: { // Customize the colors of the main button and dialog popup button

@@ -113,7 +113,7 @@ class RequestHandler {
                         date.setDate(date.getDate() + (days[day] + 7 - date.getDay()) % 7);
                         date.setHours(hoursInfo[day].substr(0,2),hoursInfo[day].substr(3,2))
                         var notificationData = {
-                          "app_id": "eb163d0d-1c91-4c62-8875-c3fd70489838",
+                          "app_id": `${process.env.REACT_APP_ONESIGNAL_APP_ID}`,
                           "include_player_ids": [id],
                           "data": {"foo": "bar"},
                           "send_after": date.toString(),
@@ -124,7 +124,7 @@ class RequestHandler {
                             url: 'https://onesignal.com/api/v1/notifications',
                             headers: {
                                 'Content-Type': 'application/json',
-                                'Authorization': 'Basic MjY2MDcyMjktMjA3Yy00ODIwLWFjMDQtMmY0MmNlNGEzY2Qz'
+                                'Authorization': `Basic ${process.env.REACT_APP_ONESIGNAL_API_KEY}`
                             },
                             data: notificationData
                         }).then((resp)=>console.log(resp))
