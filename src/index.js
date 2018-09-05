@@ -9,11 +9,12 @@ import thunk from 'redux-thunk';
 import { unregister } from './registerServiceWorker';
 import routineApp from './redux/reducer.js';
 
-
+let devTools = window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__();
+if(!devTools) devTools = a=>a;
 const store = createStore(routineApp,
     compose(
             applyMiddleware(thunk),
-            window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
+            devTools
         )
     );
 
