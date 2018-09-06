@@ -26,7 +26,7 @@ class TaskList extends Component {
         this.props.setActiveRoutine(id);
         this.setState({redirect:'/dashboard/tasks/'+id})
     }
-    onShowArchived = ()=>this.setState({showArchived:true})
+    onShowArchived = ()=>this.setState({showArchived:!this.state.showArchived})
     render()
     {
         return (
