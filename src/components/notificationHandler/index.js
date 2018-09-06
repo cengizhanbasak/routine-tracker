@@ -20,9 +20,17 @@ export default class NotificationHandler extends Component {
     		params[pair[0]] = decodeURIComponent(pair[1]);
     	}
         console.log(params);
-        requestHandler.ScheduleNotificationToNextWeek(params['id'],params['date']).then(()=>{
-            this.setState({redirect:true});
+
+        requestHandler.getFormProperties(params['formid']).then((resp)=>{
+            if(resp.data.content.status === 'ENABLED'){
+                requestHandler.ScheduleNotificationToNextWeek(params['id'],params['date']).then(()=>{
+                    this.setState({redirect:true});
+                })
+            }else{
+                this.setState({redirect:true});
+            }
         })
+
     }
 
     render(){

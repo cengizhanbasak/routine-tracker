@@ -84,14 +84,14 @@ class RequestHandler {
         return response.data.content;
     }
 
-    getRequest(url,data={}){
+    async getFormProperties(id){
+        let response= {};
 
-        let response = {}
-
-        axios.get({
-            url:url,
-            data:data
-        }).then((resp) => response=resp )
+        let baseURL = 'https://api.jotform.com/form/';
+        await axios({
+            method:'GET',
+            url: baseURL+id+'/properties?apiKey='+this.apiKey
+        }).then((resp)=>response=resp);
         return response;
     }
 
@@ -115,7 +115,7 @@ class RequestHandler {
                         var notificationData = {
                           "app_id": `${process.env.REACT_APP_ONESIGNAL_APP_ID}`,
                           "include_player_ids": [id],
-                          "url":`http://localhost:3000/notifications?date=${date.toString()}&id=${id}`,
+                          "url":`http://localhost:3000/notifications?date=${date.toString()}&id=${id}&formid=${response.data.content.id}`,
                           "send_after": date.toString(),
                           "contents": {"en": "You may have a routine coming on!"}
                         }
