@@ -77,7 +77,7 @@ class RoutinePage extends Component {
             var timeLeft = moment
                 .tz(this.state.submissions[0].created_at.toString(),'America/New_York')
                 .tz(moment.tz.guess()).add(20,'hours')
-                .diff(moment(currentDate.toString()),'hours');
+                .diff(moment(currentDate.toISOString()),'hours');
             return (<h2 className="submissionWarning">{timeLeft} hours to be able to record next activity.</h2>)
         }
     }
@@ -130,22 +130,21 @@ class RoutinePage extends Component {
                                         )
                                     }
                                     { this.renderSubmissionForm() }
-
-                                    <div className="deleteFormButton" onClick={this.onRemoveFormClick}>Archive Routine</div>
-
-
                                 </div>
                               </div>
                             )
                             }
                         </div>
+                        <div className="control-buttons">
+                        <div className="formButton deleteButton" onClick={this.onRemoveFormClick}><i className="fas fa-trash-alt"></i>Archive</div>
                         {
                             this.state.info.status !== "DELETED"
                             &&
                             (
-                                <div onClick={this.onEditClick}>Edit Routine</div>
+                                <div onClick={this.onEditClick} className="formButton editButton"><i className="fas fa-edit"></i>Edit</div>
                             )
                         }
+                        </div>
                         {
                             this.state.info.status !== "DELETED"
                             &&
@@ -156,7 +155,7 @@ class RoutinePage extends Component {
                                     {
                                         !this.state.showAll
                                         &&
-                                        (<span onClick={()=>this.setState({showAll:true})}>Show All Submissions</span>)
+                                        (<span className="showAllButton" onClick={()=>this.setState({showAll:true})}>Show All Submissions</span>)
                                     }
                                     {
                                         this.state.showAll

@@ -16,12 +16,11 @@ render(){
             <div className="Dashboard-head">
                 <div className="dbhead-content">
                     <div className="Menu">
-                        <Link to={this.props.match.url + "/tasks"}><h1>Tasks</h1></Link>
-                        <Link to={this.props.match.url + "/stats"}><h1>Stats</h1></Link>
+                        <Link to={this.props.match.url + "/tasks"}><h2>Tasks</h2></Link>
+                        <Link to={this.props.match.url + "/stats"}><h2>Stats</h2></Link>
                     </div>
-                    <Link to={this.props.match.url + "/tasks/new"}><h1 className="NewHabitButton">New Routine</h1></Link>
+                    <Link to={this.props.match.url + "/tasks/new"}><h2 className="NewHabitButton">New Routine</h2></Link>
                 </div>
-                <hr/>
             </div>
                 <Route exact path={this.props.match.url + "/tasks"} render={()=> <TaskListContainer/>}/>
                 <Route path={this.props.match.url + "/stats"} render={() => <StatsViewContainer/>}/>

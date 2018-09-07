@@ -7,18 +7,18 @@
 }
 
 .TaskListTitle{
-    margin: 8px;
+    line-height: 40px;
+    font-size: 1.2em;
 }
 
 .taskItem {
     display: flex;
     flex-direction: row;
     list-style: none;
-    height: 60px;
+    height: 48px;
     width: 100%;
     border-bottom: 1px solid #333;
     align-items: center;
-    font-size: 24;
     line-height: 3;
 }
 
@@ -26,13 +26,31 @@
     background: rgba(200,200,200,0.8);
 }
 
+.dropdownbutton {
+    margin: 4px;
+    font-weight: 400;
+}
+
+@media only screen and (max-width: 767px) {
+    .TaskListTitle{
+        text-align: center;
+    }
+}
+@media only screen and (min-width: 768px) {
+    .TaskListTitle{
+        padding: 0px 4px;
+        margin: 0px 60px;
+    }
+}
+
+
 .name {
-    width: 30%;
+    width: 50%;
     border-right: 1px solid #aaa;
 }
 
 .time {
-    width: 40%;
+    width: 50%;
     border-right: 1px solid #aaa;
 }
 

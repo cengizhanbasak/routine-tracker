@@ -32,7 +32,9 @@
     .mobile-login{
         display: none;
     }
-
+    .Header-menuItemList li form {
+        height: 45px;
+    }
 }
 .Header-menuItemList {
     list-style-type: none;
@@ -44,26 +46,37 @@
     color: #000;
     font-size: 40;
     text-decoration: none;
-    padding: 10px;
 }
 
 a {
     text-decoration: none;
 }
 
-li span {
+.signupbutton {
     color: #000;
-    font-size: 40;
+    line-height: 40px;
     text-decoration: none;
     padding: 10px;
 }
 
-li span:hover{
+
+
+.signupbutton:hover {
+    background: #ddd;
     color: #00a7ff;
 }
 
-ul li span:hover {
+.logoutButton {
+    color: #000;
+    text-decoration: none;
+    padding: 10px;
+}
+
+
+
+.logoutButton:hover {
     background: #ddd;
+    color: #00a7ff;
 }
 
 .Header-content {

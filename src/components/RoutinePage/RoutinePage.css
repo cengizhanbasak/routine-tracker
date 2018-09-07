@@ -33,6 +33,34 @@ form textarea {
     height: 60px;
 }
 
+.formButton{
+    display: inline-block;
+    margin: 4px;
+    text-align: center;
+    padding: 4px;
+    font-size: 1.2em;
+    border-radius: 4px;
+    color: #fff;
+}
+
+.showAllButton{
+    font-size: 1.2em;
+    padding: 4px;
+    border-radius: 4px;
+}
+
+.showAllButton:hover{
+    background: #aaa;
+}
+
+.deleteButton{
+    background: #f00;
+}
+
+.editButton{
+    background: #00a7ff;
+}
+
 .deleteFormButton {
     width: 200px;
     line-height: 2em;

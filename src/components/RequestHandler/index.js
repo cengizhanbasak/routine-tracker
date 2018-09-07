@@ -96,10 +96,10 @@ class RequestHandler {
     }
 
 
-    postForm(data){
+    async postForm(data){
         var baseURL = 'https://api.jotform.com/form?apiKey='
 
-        axios({
+        await axios({
             method: 'POST',
             url: baseURL+this.apiKey,
             data: qs.stringify(data),
@@ -135,24 +135,24 @@ class RequestHandler {
 
     }
 
-    editForm(id,data){
+    async editForm(id,data){
         var baseURL = 'https://api.jotform.com/form/'
-        axios({
+        await axios({
             method: 'POST',
             url: baseURL+id+'/properties?apiKey='+this.apiKey,
             data: qs.stringify({"properties[title]":data["properties[title]"]})
         })
-        axios({
+        await axios({
             method: 'POST',
             url: baseURL+id+'/question/1?apiKey='+this.apiKey,
             data: qs.stringify({"question[text]":data["questions[0][text]"]})
         })
-        axios({
+        await axios({
             method: 'POST',
             url: baseURL+id+'/question/2?apiKey='+this.apiKey,
             data: qs.stringify({"question[text]":data["questions[1][text]"]})
         })
-        axios({
+        await axios({
             method: 'POST',
             url: baseURL+id+'/question/5?apiKey='+this.apiKey,
             data: qs.stringify({"question[text]":data["questions[4]"].text})

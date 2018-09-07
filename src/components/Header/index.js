@@ -85,7 +85,7 @@ class Header extends Component {
                                             <input type="submit" value="Login" />
                                         </form>
                                     </li>
-                                    <li ><a href="https://www.jotform.com/signup"><span>Signup</span></a></li>
+                                    <li ><a href="https://www.jotform.com/signup"><span className="signupbutton">Signup</span></a></li>
                                 </ul>
                                 )
                             }
@@ -94,8 +94,8 @@ class Header extends Component {
                                 &&
                                 (
                                 <ul className="Header-menuItemList">
-                                    <li>Hello, {this.props.user.username}</li>
-                                    <Link to=""><li onClick={this.OnLogoutClick}><span>Logout</span></li></Link>
+                                    <li><i className="fas fa-user"></i> {this.props.user.username}</li>
+                                    <Link to=""><li onClick={this.OnLogoutClick}><span className="logoutButton">Logout</span></li></Link>
                                 </ul>
                                 )
                             }

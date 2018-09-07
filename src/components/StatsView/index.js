@@ -31,15 +31,15 @@ class StatsView extends Component {
                 <div className="Stats-header">
                     <div className="col taskCount">
                         <h1 className="big">{this.props.routinesList.length}</h1>
-                        <h1>Routines Tracking</h1>
+                        <h2>Routines Tracking</h2>
                     </div>
                     <div className="col taskFill">
                         <h1 className="big">{this.state.totalRecords}</h1>
-                        <h1>Total Routine Records</h1>
+                        <h2>Total Routine Records</h2>
                     </div>
                     <div className="col taskPercent">
                         <h1 className="big">{this.state.achievements}</h1>
-                        <h1>Achievements</h1>
+                        <h2>Achievements</h2>
                     </div>
                 </div>
                 <div className="achievements-section">
@@ -49,7 +49,7 @@ class StatsView extends Component {
                         this.state.totalRecords>=5
                         &&
                         <li>
-                            <div classNmae="name">Beginner</div>
+                            <div className="achievement-name">Beginner</div>
                             <div className="descr"> Record 5 times on routines </div>
                         </li>
                     }
@@ -57,7 +57,7 @@ class StatsView extends Component {
                         this.state.totalRecords>=10
                         &&
                         <li>
-                            <div classNmae="name">Intermediate</div>
+                            <div className="achievement-name">Intermediate</div>
                             <div className="descr"> Record 10 times on routines </div>
                         </li>
                     }
@@ -65,7 +65,7 @@ class StatsView extends Component {
                         this.state.totalRecords>=50
                         &&
                         <li>
-                            <div classNmae="name">Pro</div>
+                            <div className="achievement-name">Pro</div>
                             <div className="descr"> Record 50 times on routines </div>
                         </li>
                     }

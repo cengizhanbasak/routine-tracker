@@ -205,13 +205,16 @@ class HabitForm extends Component {
         console.log(formObject);
 
         if(this.props.mode==='new'){
-            requestHandler.postForm(formObject);
+            requestHandler.postForm(formObject).then(()=>{
+                this.setState({redirect:'/dashboard/tasks'})
+            });
         }
         if(this.props.mode==='edit'){
-            requestHandler.editForm(this.props.active,formObject);
+            requestHandler.editForm(this.props.active,formObject).then(()=>{
+                this.setState({redirect:'/dashboard/tasks'})
+            });;
         }
 
-        this.setState({redirect:'/dashboard/tasks'})
     }
 
     render()
@@ -220,39 +223,42 @@ class HabitForm extends Component {
         return (
             <div className="habitFormPage">
                 <form onSubmit={this.onSubmitForm}>
+                    <div className="form-column">
+                        <label>Title*: </label><br/>
+                        <input className="input_name" type="text" value={this.state.title} onChange={this.onTitleInputChange}/><br/>
 
-                    <label>Title*: </label><br/>
-                    <input className="input_name" type="text" value={this.state.title} onChange={this.onTitleInputChange}/><br/>
-
-                    <label>Description: </label><br/>
-                    <textarea className="input_descr"  value={this.state.description} onChange={this.onDescriptionInputChange}/><br/>
-
-                    <label>Active Days*: </label><br/>
-                    { days.map((day,index)=> (<span key={index}><input type="checkbox" name={day} onChange={this.onDayChange}/> {day} <br/></span>)) }
-
-                    <label>Remind me at*: </label><br/>
-                    <label>Different hours every day </label>
-                    <input type="checkbox" name="diffEveryDay" onChange={this.onDiffEverydayChange}></input>
-                    {
-                        !this.state.diffEveryDay
-                        &&
-                        (<div><input type="time" name="time" onChange={this.onHourChange} /><br/></div>)
-                    }
-                    {
-                        this.state.diffEveryDay
-                        &&
-                        (
-                            <div>
-                                {this.state.activeDays.map((day,index)=>(
-                                    <span key={index}>
-                                        <label>{day}:</label><br/>
-                                        <input type="time" name={`${day}`} onChange={this.onHourChange} /><br/>
-                                    </span>
-                                ))}
-                            </div>
-                        )
-                    }
-                    {this.renderSubmitButton()}
+                        <label>Description: </label><br/>
+                        <textarea className="input_descr"  value={this.state.description} onChange={this.onDescriptionInputChange}/><br/>
+                    </div>
+                    <div className="form-column">
+                        <label>Active Days*: </label><br/>
+                        { days.map((day,index)=> (<span key={index}><input type="checkbox" name={day} onChange={this.onDayChange}/> {day} <br/></span>)) }
+                    </div>
+                    <div className="form-column">
+                        <label>Remind me at*: </label><br/>
+                        <label>Different hours every day </label>
+                        <input type="checkbox" name="diffEveryDay" onChange={this.onDiffEverydayChange}></input>
+                        {
+                            !this.state.diffEveryDay
+                            &&
+                            (<div><input type="time" name="time" onChange={this.onHourChange} /><br/></div>)
+                        }
+                        {
+                            this.state.diffEveryDay
+                            &&
+                            (
+                                <div>
+                                    {this.state.activeDays.map((day,index)=>(
+                                        <span key={index}>
+                                            <label>{day}:</label><br/>
+                                            <input type="time" name={`${day}`} onChange={this.onHourChange} /><br/>
+                                        </span>
+                                    ))}
+                                </div>
+                            )
+                        }
+                        {this.renderSubmitButton()}
+                    </div>
 
                 </form>
                 {

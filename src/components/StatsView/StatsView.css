@@ -30,6 +30,10 @@
     margin: 0px;
 }
 
+.col h2 {
+    margin: 0px;
+}
+
 .big {
     font-size: 5em;
 }

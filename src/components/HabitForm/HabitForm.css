@@ -1,19 +1,43 @@
 .habitFormPage {
-    padding: 0px 40px;
+    padding: 10px 40px;
 }
+
+.habitFormPage form {
+    display: flex;
+    justify-content: space-around;
+    max-width: 960px;
+    width: 90%;
+    margin: auto;
+}
+
+@media only screen and (max-width: 767px) {
+    .habitFormPage form {
+        flex-direction: column;
+    }
+}
+
+@media only screen and (min-width: 768px) {
+
+    .habitFormPage form .form-column:not(:first-child) {
+        padding-left: 40px;
+        border-left: 2px solid #ddd;
+    }
+
+    .form-column {
+        padding: auto;
+        width: 30%;
+    }
+}
+
 
 form input {
     padding: 8px;
-    color: #ddd;
-    background: #444;
     border-radius: 4px;
     margin: 4px;
 }
 
 form textarea {
     padding: 8px;
-    color: #ddd;
-    background: #444;
     border-radius: 4px;
 }
 
