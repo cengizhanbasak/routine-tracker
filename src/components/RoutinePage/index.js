@@ -113,7 +113,7 @@ class RoutinePage extends Component {
                                         &&
                                         (
                                         <div className="submissionInfo">
-                                            <h3>Last Submission:</h3>
+                                            <h3>Last Record:</h3>
                                             <p>Date: {moment.tz(this.state.submissions[0].created_at.toString(),'America/New_York')
                                                         .tz(moment.tz.guess())
                                                         .format('MMMM Do YYYY, h:mm:ss a')}</p>
@@ -126,7 +126,7 @@ class RoutinePage extends Component {
                                         &&
                                         (
                                         <div className="submissionInfo">
-                                            <h3>No Submissions Yet</h3>
+                                            <h3>No Records Yet</h3>
                                         </div>
                                         )
                                     }
@@ -162,7 +162,7 @@ class RoutinePage extends Component {
                                     {
                                         !this.state.showAll
                                         &&
-                                        (<span className="showAllButton" onClick={()=>this.setState({showAll:true})}>Show All Submissions</span>)
+                                        (<span className="showAllButton" onClick={()=>this.setState({showAll:true})}>Show All Records</span>)
                                     }
                                     {
                                         this.state.showAll
