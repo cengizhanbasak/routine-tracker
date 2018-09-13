@@ -3,6 +3,7 @@ import './RoutinePage.css';
 import { Redirect } from 'react-router-dom';
 import requestHandler from '../RequestHandler';
 import moment from 'moment-timezone';
+import DateCountdown from 'react-date-countdown-timer';
 
 class RoutinePage extends Component {
     constructor(props){
@@ -15,7 +16,8 @@ class RoutinePage extends Component {
             loading:true,
             note: '',
             redirect: '',
-            showAll: false
+            showAll: false,
+            dateArrived:false
             }
 
     }
@@ -62,7 +64,7 @@ class RoutinePage extends Component {
         let currentDate = new Date();
         if(this.state.submissions.length !== 0) {var lastActivityDate = new Date(this.state.submissions[0].created_at);}
         const hours20 = 72000000; // 20 hours as miliseconds
-        if(this.state.submissions.length === 0 || currentDate - lastActivityDate >= hours20 )
+        if(this.state.submissions.length === 0 || currentDate - lastActivityDate >= hours20 || this.state.dateArrived )
             return (
                 <div className="submissionForm">
                     <h2>Record today's activity</h2>
@@ -74,11 +76,10 @@ class RoutinePage extends Component {
                 </div>
                 )
         else{
-            var timeLeft = moment
+            var nextActivityDate = moment
                 .tz(this.state.submissions[0].created_at.toString(),'America/New_York')
                 .tz(moment.tz.guess()).add(20,'hours')
-                .diff(moment(currentDate.toISOString()),'hours');
-            return (<h2 className="submissionWarning">{timeLeft} hours to be able to record next activity.</h2>)
+            return (<h3 className="submissionWarning"><DateCountdown dateTo={nextActivityDate} callback={()=>this.setState({dateArrived:true})} /> to be able to record next activity.</h3>)
         }
     }
 
@@ -136,7 +137,13 @@ class RoutinePage extends Component {
                             }
                         </div>
                         <div className="control-buttons">
-                        <div className="formButton deleteButton" onClick={this.onRemoveFormClick}><i className="fas fa-trash-alt"></i>Archive</div>
+                        {
+                            this.state.info.status !== "DELETED"
+                            &&
+                            (
+                                <div className="formButton deleteButton" onClick={this.onRemoveFormClick}><i className="fas fa-trash-alt"></i>Archive</div>
+                            )
+                        }
                         {
                             this.state.info.status !== "DELETED"
                             &&

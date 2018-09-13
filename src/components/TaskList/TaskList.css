@@ -23,7 +23,7 @@
 }
 
 .taskItem:hover {
-    background: rgba(200,200,200,0.8);
+    background: #f4f4f4;
 }
 
 .dropdownbutton {
